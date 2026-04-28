@@ -1,3 +1,70 @@
+# ======================================================
+# CLAUDE CONTEXT — RENDIMENSION GROUP
+# Leer este bloque PRIMERO antes de cualquier acción
+# ======================================================
+
+## QUIÉN ES HUGO RAMIREZ
+- CEO & Founder de Rendimension (visualización arquitectónica premium, Miami)
+- Arquitecto internacional, ex-Project Manager Nike retail stores, partner Alo Yoga
+- Dirige también: Prestige 360 Design (retail fit-out), systemreflex, theprimevr, hugoramirez.co
+- Email: rendimension@gmail.com | Tel: +1 (305) 290-3717
+- Dirección principal SIEMPRE Miami: 4300 Biscayne Blvd S203, Miami FL 33137
+
+## ARCHIVOS DE CONTEXTO — LEER EN ESTE ORDEN
+
+### TIER 1 — REGLAS PERMANENTES (leer siempre, nunca ignorar)
+- `design-system.md` — colores y fuentes de rendimension.com (REGLA PERMANENTE)
+- `directriz-rendimension.md` — dirección oficial Miami, schema, directorios
+- `geo-seo-workflow.md` — proceso obligatorio para páginas web GEO/SEO
+- `rendimension/CLAUDE.md` — reglas de case studies y WordPress (este archivo)
+
+### TIER 2 — CONTEXTO DEL NEGOCIO (leer al inicio de cada sesión)
+- `servicios-rendimension.md` — servicios, pricing tiers $5K-$150K+, segmentos
+- `quote-system.md` — sistema de cotizaciones, psicología de ventas, banned phrases
+- `website-operaciones.md` — stack WP, acceso, reglas NO tocar diseño
+- `seo-config.md` — Rank Math Pro + WP Rocket configuración completa
+- `national-dominance-playbook.md` — estrategia de posicionamiento nacional
+
+### TIER 3 — CASOS DE ESTUDIO (consultar cuando sean relevantes)
+- `caso-estudio-1-alo-yoga.md` — 5 años, 20+ tiendas, 3 continentes
+- `caso-estudio-2-house-of-speed.md` — $7.3M levantados con renders
+- `caso-estudio-3-historic-firehouse.md` — aprobación municipal Atlanta
+- `rendimension/clientes/` — historial detallado de clientes
+- `rendimension/contenido/` — contenido del website y blog
+- `rendimension/seo/` — configuración SEO avanzada
+
+### TIER 4 — PROYECTOS SECUNDARIOS (solo si la sesión es sobre ese proyecto)
+- `prestige360design/` — retail fit-out segunda ubicación (San Antonio + Miami)
+- `hugoramirez/` — sitio personal de Hugo
+- `systemreflex/` — proyecto Reflex
+- `theprimevr/` — proyecto VR
+- `rendimension-cotizador/` — cotizador quotes.rendimension.com
+- `prestige360-design.md` — resumen ejecutivo Prestige 360
+
+## CARPETAS A IGNORAR (skills genéricos, NO son memoria de Rendimension)
+Las siguientes carpetas son templates genéricos de marketing — NO leer a menos que Hugo lo pida explícitamente:
+ab-test-setup, ad-creative, ai-seo, analytics-tracking, campaign-assets, campaign-reports,
+churn-prevention, cold-email, competitor-ads, competitor-alternatives, content-strategy,
+copy-editing, copywriting, email-sequence, form-cro, free-tool-strategy, launch-strategy,
+lead-magnets, marketing-ideas, marketing-psychology, onboarding-cro, page-cro, paid-ads,
+paywall-upgrade-cro, popup-cro, pricing-strategy, product-marketing-context, programmatic-seo,
+referral-program, revops, sales-enablement, schema-markup, seo-audit, signup-flow-cro,
+site-architecture, social-content, skills/
+
+## REGLAS DE ORO (aplicar siempre, sin que Hugo las mencione)
+1. Diseño web rendimension.com: NUNCA tocar Elementor sin aprobación — solo trabajar blog y case studies
+2. Color: SOLO naranja #FF5F03, NUNCA #ff6900 ni otro tono naranja
+3. Fuente: SOLO Roboto — nunca Inter, Poppins, Montserrat
+4. Dirección: SIEMPRE Miami como principal — nunca Texas o LA en schemas/directorios
+5. Pricing: mínimo $5K — nunca cotizar por debajo de Tier 1
+6. Case studies: duplicar House of Speed (ID 2185) como template base — nunca desde cero
+7. Rank Math: mínimo 85/100 antes de cerrar cualquier tarea de página
+8. Anti-loop: máximo 2 intentos por paso — si falla 2 veces, PARAR y reportar a Hugo
+9. Workflow GEO/SEO: seguir las 5 fases + 2 rondas con los 4 amigos para toda página nueva
+10. Frases prohibidas en propuestas: "stunning renderings", "visualize your vision", "bring ideas to life"
+
+---
+
 # CLAUDE.md — Directriz Obligatoria: Case Studies Rendimension
 
 > **Versión:** 2026-04-26 | Basado en sesiones completas: Alo Yoga (#1), House of Speed (#2), Historic Firehouse (#3) + estrategia factory process 26 Abr 2026
