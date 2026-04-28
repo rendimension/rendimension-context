@@ -1,0 +1,94 @@
+RENDIMENSION — BRAND & PROJECT CONFIGURATION
+Express Estimator Setup File
+============================================================
+
+FILL IN BEFORE DEVELOPMENT STARTS:
+(Replace all [PLACEHOLDER] values with real data)
+
+------------------------------------------------------------
+CONTACT & NOTIFICATIONS
+------------------------------------------------------------
+
+Hugo's notification email:     [YOUR EMAIL HERE]
+Client-facing sender name:     Rendimension
+Client-facing sender email:    [YOUR SENDER EMAIL]
+EmailJS Service ID:            [FROM EMAILJS DASHBOARD]
+EmailJS Template ID:           [FROM EMAILJS DASHBOARD]
+EmailJS Public Key:            [FROM EMAILJS DASHBOARD]
+
+------------------------------------------------------------
+STRIPE CONFIGURATION
+------------------------------------------------------------
+
+Stripe Publishable Key:        [FROM STRIPE DASHBOARD]
+Deposit percentage:            30%
+Discount percentage:           10%
+Currency:                      USD
+Stripe success redirect URL:   quotes.rendimension.com/thank-you
+Stripe cancel redirect URL:    quotes.rendimension.com (back to estimator)
+
+------------------------------------------------------------
+BOOKING / CONSULTATION
+------------------------------------------------------------
+
+Calendly link:                 [YOUR CALENDLY URL]
+  (Used for "Book a Consultation" button on Step 5)
+
+------------------------------------------------------------
+BRAND COLORS
+------------------------------------------------------------
+
+Primary color:                 [HEX — e.g. #0A1628]
+Accent / CTA color:            [HEX — e.g. #C9A84C]
+Background:                    [HEX — e.g. #FFFFFF or #F8F8F6]
+Text primary:                  [HEX — e.g. #1A1A1A]
+Text secondary:                [HEX — e.g. #6B7280]
+
+NOTE: Current cotizador uses dark navy + white. 
+Confirm if you want to keep that direction or change it.
+
+------------------------------------------------------------
+LOGO
+------------------------------------------------------------
+
+Logo file URL or path:         [LINK TO LOGO FILE]
+Logo format preferred:         SVG or PNG with transparent bg
+Logo placement:                Top left on all screens
+
+------------------------------------------------------------
+DOMAIN & HOSTING
+------------------------------------------------------------
+
+Subdomain:                     quotes.rendimension.com
+Hosting:                       cPanel
+Deploy method:                 Upload single HTML file via File Manager
+SSL:                           Confirm SSL active on subdomain before launch
+
+------------------------------------------------------------
+LEGAL / FOOTER TEXT
+------------------------------------------------------------
+
+Company full name:             Rendimension
+Website:                       www.rendimension.com
+Estimate validity:             7 calendar days from submission
+Footer disclaimer:             "This is an express estimate. Final pricing 
+                                is confirmed after reviewing your project 
+                                details with our team."
+
+------------------------------------------------------------
+QUOTE ID FORMAT
+------------------------------------------------------------
+
+Format used in Lovable version: RD-YYMMDD-XXXX
+Recommend keeping same format for consistency.
+Example: RD-260315-4821
+
+------------------------------------------------------------
+POST-LAUNCH INTEGRATIONS (Phase 2)
+------------------------------------------------------------
+
+[ ] Google Analytics tracking
+[ ] CRM integration (HubSpot / Airtable / Google Sheets)
+[ ] n8n automation workflow
+[ ] Calendar booking confirmation email
+[ ] PDF quote generation

@@ -1,0 +1,35 @@
+{
+  "expectations": [
+    {
+      "text": "Avoids commodity language and vendor positioning",
+      "passed": true,
+      "evidence": "Explicitly rejects 'deliver X renders' vendor language; replaces with 'strategic visualization system', 'decision moments', 'narrative structure'; eliminates price-per-image framing."
+    },
+    {
+      "text": "Connects to business outcome (sales, decisions, risk, alignment)",
+      "passed": true,
+      "evidence": "Corrected email anchors on 'secure stakeholder alignment / accelerate pre-sales / validate design before construction / present to investors'; frames $6,200 as investment in decision-making capability."
+    },
+    {
+      "text": "Positions Rendimension as strategic partner, not vendor",
+      "passed": true,
+      "evidence": "Reframed from deliverables to outcomes; establishes Rendimension's authority by asking qualifying questions instead of chasing business; tone shifts from 'here's what we deliver' to 'here's what we need to confirm'."
+    },
+    {
+      "text": "Uses outcome-first framing, not deliverable-first",
+      "passed": true,
+      "evidence": "Email opens with client's business objective, not with render count; pricing presented as investment in solving problem, not as production cost; strategic mechanism (visuals) introduced after outcome framing."
+    },
+    {
+      "text": "Would pass Hugo's review without edits",
+      "passed": true,
+      "evidence": "Explicitly noted: 'This version passes all five levels and would pass the Hugo Test'; protects premium positioning and maintains professional, structured tone required by Rendimension's brand."
+    }
+  ],
+  "summary": {
+    "passed": 5,
+    "failed": 0,
+    "total": 5,
+    "pass_rate": 1.0
+  }
+}

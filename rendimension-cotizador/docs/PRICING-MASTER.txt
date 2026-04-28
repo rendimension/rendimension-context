@@ -1,0 +1,81 @@
+RENDIMENSION — PRICING MASTER TABLE
+Express Estimator | quotes.rendimension.com
+Last updated: March 2026
+============================================================
+
+IMPORTANT NOTE FOR ALL ESTIMATES:
+All prices are estimates. Final pricing is confirmed after reviewing 
+actual project details with the client.
+
+------------------------------------------------------------
+CATEGORY 1: VISUALIZATIONS (per image / per plan)
+------------------------------------------------------------
+
+Essential Rendering         $499 / image
+  → Slider: 1–20 images
+  → Use case: Budget-conscious projects, HOA approvals, quick previews
+
+Premium Rendering           $750 / image
+  → Slider: 1–20 images
+  → Use case: Professional presentations, serious projects, client approvals
+
+Signature Rendering         $1,200 / image
+  → Slider: 1–10 images
+  → Use case: Luxury developments, high-end branding, iconic projects
+
+Complementary View          $299 / view
+  → Slider: 1–10 views
+  → RULE: Only available if client selected Essential or Premium in same session
+  → Definition: Additional angle within the SAME SPACE (same room, not same property)
+
+3D Floor Plan               $850 / plan
+  → Slider: 1–10 plans
+
+------------------------------------------------------------
+CATEGORY 2: IMMERSIVE EXPERIENCES (base + per sqft)
+------------------------------------------------------------
+
+Full VR 360 — Meta Quest
+  Base: $3,500 + $2.90/sqft | Slider: 500–10,000 sqft
+
+Browser Virtual Tour (Matterport-style)
+  Base: $2,500 + $1.50/sqft | Slider: 500–10,000 sqft
+
+Cinematic Video Walkthrough
+  Base: $2,500 + $2.00/sqft | Slider: 500–10,000 sqft
+
+Interactive VR — Change Materials Live
+  Base: $3,500 + $4.00/sqft | Slider: 500–10,000 sqft
+
+------------------------------------------------------------
+CATEGORY 3: ARCHITECTURE & DRAFTING
+------------------------------------------------------------
+
+Drafting / Construction Drawings
+  $380 / plan | Slider: 1–20 plans
+  Complex projects → show "Request Custom Quote" button
+
+Architectural Design
+  $3.50/sqft | Slider: 500–20,000 sqft
+  INCLUDES: 1 Essential Rendering per 1,000 sqft (auto-calculated)
+
+------------------------------------------------------------
+CATEGORY 4: WEBSITES
+------------------------------------------------------------
+
+Starter Landing Page        $7,000
+Business Pro Website        $9,500
+Full Brand Experience       $14,500
+E-commerce / Portal         $18,000
+
+------------------------------------------------------------
+CONVERSION HOOK — 10% DISCOUNT RULES
+------------------------------------------------------------
+
+- Shown on Step 5 (final estimate screen)
+- Offer: 10% off if client pays 30% deposit via Stripe immediately
+- FIRST TIME ONLY per email address
+- System registers email token on Step 4
+- Same email resubmits = discount button disabled
+- Different email = Hugo gets duplicate notification (manual detection)
+- Hugo receives email notification on EVERY submission

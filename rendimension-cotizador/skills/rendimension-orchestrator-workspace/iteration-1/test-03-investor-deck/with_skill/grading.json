@@ -1,0 +1,35 @@
+{
+  "expectations": [
+    {
+      "text": "Avoids commodity language and vendor positioning",
+      "passed": true,
+      "evidence": "Eliminates 'photorealistic renders' commodity language; reframes '2 rounds of revisions' as 'The Clarity Guarantee'; zero vendor-style language present; positions as communication system strategist."
+    },
+    {
+      "text": "Connects to business outcome (sales, decisions, risk, alignment)",
+      "passed": true,
+      "evidence": "Opens with investor conviction objective: 'can they see exactly what they're funding?'; frames around moving from 'evaluation to commitment'; explicitly ties to capital-raise decision logic and investor psychology."
+    },
+    {
+      "text": "Positions Rendimension as strategic partner, not vendor",
+      "passed": true,
+      "evidence": "Explicitly strategic partner language: 'structure how your project is presented'; positions work as 'communication system designed to answer questions investors ask'; never sounds like production vendor."
+    },
+    {
+      "text": "Uses outcome-first framing, not deliverable-first",
+      "passed": true,
+      "evidence": "Begins with investor conviction need, not deliverables; deliverables introduced as tools serving objective; pricing framed as investment in moving capital raise from 'maybe' to 'committed', not as production cost."
+    },
+    {
+      "text": "Would pass Hugo's review without edits",
+      "passed": true,
+      "evidence": "Explicitly approved: 'APPROVED FOR USE'; scorecard shows 5/5 across all dimensions; closes with slogan integration; tone is strategic partner briefing investor on communication strategy."
+    }
+  ],
+  "summary": {
+    "passed": 5,
+    "failed": 0,
+    "total": 5,
+    "pass_rate": 1.0
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "expectations": [
+    {
+      "text": "Avoids commodity language and vendor positioning",
+      "passed": false,
+      "evidence": "Uses commodity language: 'high-quality photorealistic renders', 'exceptional renders', 'architectural vision'; positions as production vendor; no strategic language present."
+    },
+    {
+      "text": "Connects to business outcome (sales, decisions, risk, alignment)",
+      "passed": false,
+      "evidence": "No connection to business outcomes; offers to 'learn more' and 'customize based on project complexity' but never frames around what problem is solved or what decision is supported."
+    },
+    {
+      "text": "Positions Rendimension as strategic partner, not vendor",
+      "passed": false,
+      "evidence": "Positions as production vendor; opens with deliverables ('5 high-quality photorealistic renders'); explains pricing as 'customized based on project complexity'; vendor positioning throughout."
+    },
+    {
+      "text": "Uses outcome-first framing, not deliverable-first",
+      "passed": false,
+      "evidence": "Completely deliverable-first; leads with 'Proposal Overview' of renders and revisions; discusses 'factors' that affect pricing but never frames outcomes; inverted value hierarchy."
+    },
+    {
+      "text": "Would pass Hugo's review without edits",
+      "passed": false,
+      "evidence": "Would fail Hugo's review; reads as generic vendor proposal; uses 'high-quality renders' and commodity positioning; doesn't establish strategic authority; could come from any visualization studio."
+    }
+  ],
+  "summary": {
+    "passed": 0,
+    "failed": 5,
+    "total": 5,
+    "pass_rate": 0.0
+  }
+}

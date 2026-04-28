@@ -1,0 +1,22 @@
+{
+  "eval_id": 3,
+  "eval_name": "cheap-competitor",
+  "prompt": "A client says to Rendimension:\n\n\"Another studio offered me the same renders for $2,000. Why are you so expensive?\"",
+  "assertions": [
+    {
+      "text": "Avoids commodity language and vendor positioning"
+    },
+    {
+      "text": "Connects to business outcome (sales, decisions, risk, alignment)"
+    },
+    {
+      "text": "Positions Rendimension as strategic partner, not vendor"
+    },
+    {
+      "text": "Uses outcome-first framing, not deliverable-first"
+    },
+    {
+      "text": "Would pass Hugo's review without edits"
+    }
+  ]
+}

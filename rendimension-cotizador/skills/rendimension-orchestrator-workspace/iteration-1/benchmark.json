@@ -1,0 +1,50 @@
+{
+  "skill_name": "rendimension-orchestrator",
+  "iteration": 1,
+  "configurations": [
+    {
+      "name": "with_skill",
+      "label": "With Orchestrator Skill",
+      "results": {
+        "pass_rate": {"mean": 1.0, "stddev": 0.0},
+        "tokens": {"mean": 115238, "stddev": 117},
+        "duration_seconds": {"mean": 31.2, "stddev": 2.9}
+      },
+      "per_eval": [
+        {"eval_name": "commodity-trigger", "pass_rate": 1.0, "tokens": 115205, "duration_seconds": 28.8},
+        {"eval_name": "pricing-pressure", "pass_rate": 1.0, "tokens": 115090, "duration_seconds": 28.9},
+        {"eval_name": "investor-deck", "pass_rate": 1.0, "tokens": 115213, "duration_seconds": 29.5},
+        {"eval_name": "cheap-competitor", "pass_rate": 1.0, "tokens": 115257, "duration_seconds": 32.6},
+        {"eval_name": "internal-output", "pass_rate": 1.0, "tokens": 115424, "duration_seconds": 36.3}
+      ]
+    },
+    {
+      "name": "without_skill",
+      "label": "Baseline (No Skill)",
+      "results": {
+        "pass_rate": {"mean": 0.0, "stddev": 0.0},
+        "tokens": {"mean": 105318, "stddev": 468},
+        "duration_seconds": {"mean": 16.8, "stddev": 3.1}
+      },
+      "per_eval": [
+        {"eval_name": "commodity-trigger", "pass_rate": 0.0, "tokens": 105295, "duration_seconds": 15.9},
+        {"eval_name": "pricing-pressure", "pass_rate": 0.0, "tokens": 105233, "duration_seconds": 15.8},
+        {"eval_name": "investor-deck", "pass_rate": 0.0, "tokens": 104906, "duration_seconds": 18.0},
+        {"eval_name": "cheap-competitor", "pass_rate": 0.0, "tokens": 106178, "duration_seconds": 21.7},
+        {"eval_name": "internal-output", "pass_rate": 0.0, "tokens": 104980, "duration_seconds": 12.8}
+      ]
+    }
+  ],
+  "delta": {
+    "pass_rate": "+100.0%",
+    "tokens": "+9.4%",
+    "duration": "+85.7%"
+  },
+  "analyst_notes": [
+    "The skill produces a complete 100% vs 0% differentiation across all 5 test cases — the orchestrator fundamentally changes the output quality.",
+    "Token usage is ~9.4% higher with the skill (reading 3 reference files), which is an acceptable tradeoff for the quality improvement.",
+    "Duration is ~85% higher with skill due to reading reference files, but still completes in ~30s per review.",
+    "Test 04 (cheap competitor) and Test 05 (internal output) took slightly longer — these are the harder cases requiring deeper reasoning.",
+    "The baseline runs consistently produce generic visualization vendor responses, confirming the skill is not redundant."
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "expectations": [
+    {
+      "text": "Avoids commodity language and vendor positioning",
+      "passed": true,
+      "evidence": "Eliminates 'high-quality renders', 'price per item' pricing, deliverable mechanics; rejects vendor thinking throughout; no 'revisions per image' or production-centric language."
+    },
+    {
+      "text": "Connects to business outcome (sales, decisions, risk, alignment)",
+      "passed": true,
+      "evidence": "Corrected version identifies five specific outcomes: pre-selling/faster conversions, investor/lender approval, stakeholder alignment, design validation/risk reduction, market differentiation/premium positioning."
+    },
+    {
+      "text": "Positions Rendimension as strategic partner, not vendor",
+      "passed": true,
+      "evidence": "Shifts from 'here are 5 renders' to 'what problem are we solving?'; positions Rendimension as strategic advisor; forces client self-identification of need; original scored 1/5, corrected 5/5 on positioning alignment."
+    },
+    {
+      "text": "Uses outcome-first framing, not deliverable-first",
+      "passed": true,
+      "evidence": "Corrected version opens with outcome interrogation, not deliverables; every option presented maps to specific business result; scope/timeline/investment framed as following from problem solved, not from item count."
+    },
+    {
+      "text": "Would pass Hugo's review without edits",
+      "passed": true,
+      "evidence": "Explicitly approved: 'APPROVED FOR CLIENT USE'; maintains brand integrity; can support $10K-$50K strategic engagement vs. original $500 transaction; protects positioning and credibility."
+    }
+  ],
+  "summary": {
+    "passed": 5,
+    "failed": 0,
+    "total": 5,
+    "pass_rate": 1.0
+  }
+}

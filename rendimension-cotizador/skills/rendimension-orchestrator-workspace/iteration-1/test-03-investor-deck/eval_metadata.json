@@ -1,0 +1,22 @@
+{
+  "eval_id": 2,
+  "eval_name": "investor-deck",
+  "prompt": "Review this slide content for Rendimension:\n\n\"Rendimension Visualization Package: 8 photorealistic renders, 1 virtual tour, 1 floor plan. Total: $18,500. Timeline: 3 weeks. Includes 2 rounds of revisions.\"",
+  "assertions": [
+    {
+      "text": "Avoids commodity language and vendor positioning"
+    },
+    {
+      "text": "Connects to business outcome (sales, decisions, risk, alignment)"
+    },
+    {
+      "text": "Positions Rendimension as strategic partner, not vendor"
+    },
+    {
+      "text": "Uses outcome-first framing, not deliverable-first"
+    },
+    {
+      "text": "Would pass Hugo's review without edits"
+    }
+  ]
+}

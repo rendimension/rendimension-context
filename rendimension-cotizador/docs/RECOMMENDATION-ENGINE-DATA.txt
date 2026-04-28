@@ -1,0 +1,604 @@
+RENDIMENSION — RECOMMENDATION ENGINE DATA
+Smart Package Suggestions for the Express Estimator
+Based on Industry Research — March 2026
+============================================================
+
+PURPOSE:
+This file contains the research data needed to build the smart
+recommendation engine for the homeowner path. The engine maps:
+  Project Type + Project Budget → Recommended Visualization Package
+
+The goal: make the suggestion feel proportional and logical.
+A $25K kitchen remodel gets suggested $1,000–$2,000 in viz.
+A $1M custom home gets suggested $15,000–$40,000.
+
+============================================================
+SECTION 1: VISUALIZATION SPEND AS % OF PROJECT BUDGET
+============================================================
+
+There is no single published industry standard for "what percentage
+of a construction budget goes to visualization." This ratio does not
+exist as a tracked metric the way architect fees (8-15% of construction
+cost) or marketing budgets (1-1.5% of development value) are tracked.
+
+However, by cross-referencing:
+- Architect fees (8-20% of construction cost)
+- Marketing budgets for developments (1-1.5% of projected sales)
+- Visual content allocation (10-20% of marketing budget)
+- Actual studio pricing vs. typical project budgets
+
+...we can derive practical ratios.
+
+DERIVED VISUALIZATION BUDGET RATIOS:
+
+| Project Type              | Budget Range        | Viz Spend %  | Viz $ Range          |
+|---------------------------|---------------------|--------------|----------------------|
+| Kitchen/bath remodel      | $15K–$50K           | 3–6%         | $500–$2,500          |
+| Full home remodel         | $50K–$150K          | 2–4%         | $1,500–$5,000        |
+| New custom home           | $150K–$500K         | 1.5–3%       | $3,000–$12,000       |
+| Luxury home               | $500K–$2M           | 1–2.5%       | $8,000–$40,000       |
+| Commercial/multi-family   | $2M+                | 0.5–1.5%     | $15,000–$100,000+    |
+| Interior design project   | $10K–$100K          | 4–8%         | $800–$5,000          |
+
+KEY INSIGHT: The percentage DECREASES as budget increases, but the
+absolute dollar amount INCREASES. This is the same pattern as
+architect fees — lower % on bigger projects, higher total $.
+
+WHY THESE RATIOS WORK:
+- Small projects: Visualization IS the main decision tool. Clients
+  spending $25K on a kitchen need to see it first. $1,000–$1,500
+  feels reasonable — it is 4-6% of budget, similar to what they
+  would spend on design consultation.
+- Large projects: Visualization is one tool among many (surveys,
+  engineering, legal, marketing). $30K on a $1.5M project is 2% —
+  proportional to what developers spend on marketing visuals.
+
+============================================================
+SECTION 2: STANDARD DELIVERABLES BY PROJECT TYPE
+============================================================
+
+KITCHEN OR BATHROOM REMODEL ($15K–$50K)
+---------------------------------------
+Standard scope:
+  - 2–3 interior renderings (key angles of the space)
+  - 1 material comparison view (optional but high value)
+  - NO floor plans needed (existing space)
+  - NO animation needed
+  - NO VR needed
+
+Why: Small space, few decisions. Client needs to see finishes,
+lighting, and layout from 2-3 angles. That is enough to decide.
+
+Industry pricing for this scope:
+  - Budget studios: $400–$900 (2-3 basic renders)
+  - Mid-market studios: $1,000–$2,000 (2-3 detailed renders)
+  - Premium studios: $2,000–$3,500 (2-3 high-end renders)
+
+RENDIMENSION RECOMMENDATION:
+  - 2 Standard Renderings ($499 x 2) = $998
+  - OR 2 Detailed Renderings ($750 x 2) = $1,500
+  - Add 1 Additional Angle if comparing layouts: + $299
+  - Range: $998 – $1,799
+
+
+FULL HOME REMODEL ($50K–$150K)
+------------------------------
+Standard scope:
+  - 3–5 interior renderings (living room, kitchen, master bedroom, bathroom)
+  - 1–2 exterior renderings (if facade changes)
+  - 1 3D floor plan (optional but useful for layout decisions)
+  - NO animation needed for most remodels
+  - Browser tour only if major layout changes
+
+Industry pricing for this scope:
+  - Budget studios: $1,500–$3,000 (4-6 basic renders)
+  - Mid-market studios: $3,000–$6,000 (4-6 detailed renders + floor plan)
+  - Premium studios: $5,000–$10,000 (full package)
+
+RENDIMENSION RECOMMENDATION:
+  - 3 Standard Renderings ($499 x 3) = $1,497
+  - 1 3D Floor Plan ($850) = $850
+  - OR 3 Detailed Renderings ($750 x 3) = $2,250 + floor plan
+  - Range: $1,497 – $3,100
+
+
+NEW CUSTOM HOME ($150K–$500K)
+-----------------------------
+Standard scope:
+  - 4–6 interior renderings (all major rooms)
+  - 2–3 exterior renderings (front, rear, aerial/context)
+  - 1–2 3D floor plans (per level)
+  - Video walkthrough or browser tour (1,500–3,000 sqft typical)
+  - VR optional but increasingly expected for custom homes
+
+Industry pricing for this scope:
+  - Budget studios: $4,000–$8,000
+  - Mid-market studios: $8,000–$18,000
+  - Premium studios: $15,000–$35,000
+
+RENDIMENSION RECOMMENDATION:
+  Small custom home (1,500 sqft, $150K–$250K budget):
+  - 4 Detailed Renderings ($750 x 4) = $3,000
+  - 2 Additional Angles ($299 x 2) = $598
+  - 1 3D Floor Plan ($850) = $850
+  - Browser Tour ($2,500 + $1.50 x 1,500) = $4,750
+  - Total: $9,198
+
+  Large custom home (3,000 sqft, $300K–$500K budget):
+  - 6 Detailed Renderings ($750 x 6) = $4,500
+  - 2 3D Floor Plans ($850 x 2) = $1,700
+  - Video Walkthrough ($2,500 + $2.00 x 3,000) = $8,500
+  - Total: $14,700
+
+  Range: $4,500 – $15,000
+
+
+LUXURY HOME / ESTATE ($500K–$2M)
+---------------------------------
+Standard scope:
+  - 6–10 showcase-quality renderings (every room + key details)
+  - 3–4 exterior renderings (multiple angles, seasons, times of day)
+  - 2–3 3D floor plans (all levels)
+  - Full video walkthrough (cinematic quality)
+  - VR experience (Meta Quest or equivalent)
+  - Material comparison views
+  - Aerial/context renderings
+
+Industry pricing for this scope:
+  - Mid-market studios: $15,000–$30,000
+  - Premium studios: $25,000–$60,000
+  - Top-tier studios: $40,000–$100,000+
+
+RENDIMENSION RECOMMENDATION:
+  - 6 Showcase Renderings ($1,200 x 6) = $7,200
+  - 4 Detailed Renderings ($750 x 4) = $3,000
+  - 3 Additional Angles ($299 x 3) = $897
+  - 2 3D Floor Plans ($850 x 2) = $1,700
+  - Video Walkthrough ($2,500 + $2.00 x 4,000) = $10,500
+  - VR Walkthrough ($3,500 + $2.90 x 4,000) = $15,100
+  - Range: $15,000 – $40,000
+
+
+COMMERCIAL / MULTI-FAMILY ($2M+)
+----------------------------------
+Standard scope:
+  - 8–15 renderings (unit types, amenities, lobby, exterior)
+  - 4–6 exterior renderings (street view, aerial, context)
+  - 3–5 3D floor plans (unit types + site plan)
+  - Full cinematic animation (2–3 minutes)
+  - Interactive VR (for sales center)
+  - Marketing website with visual assets
+  - Seasonal/time-of-day variations
+
+Industry pricing for this scope:
+  - Mid-market studios: $25,000–$60,000
+  - Premium studios: $50,000–$120,000
+  - Full-service packages: $80,000–$200,000+
+
+Note: Commercial developers typically allocate 1–1.5% of projected
+sales volume to marketing, with 10–20% of that going to visual content.
+For a $10M development, that's $100K–$150K marketing, with $10K–$30K
+on visualization. For a $50M project, $50K–$100K+ on visualization.
+
+RENDIMENSION RECOMMENDATION:
+  Mid-size multi-family (20–40 units):
+  - 8 Detailed Renderings ($750 x 8) = $6,000
+  - 4 Showcase Renderings ($1,200 x 4) = $4,800
+  - 4 3D Floor Plans ($850 x 4) = $3,400
+  - Video Walkthrough ($2,500 + $2.00 x 5,000) = $12,500
+  - Browser Tour ($2,500 + $1.50 x 5,000) = $10,000
+  - Total: $36,700
+
+  Large commercial development:
+  - Custom quote required. Start with strategy session.
+  - Range: $30,000 – $80,000+
+
+
+INTERIOR DESIGN PROJECT ($10K–$100K)
+--------------------------------------
+Standard scope:
+  - 2–4 renderings per room (before/concept options)
+  - Material/finish comparison views
+  - NO exterior renderings
+  - NO floor plans (unless layout changing)
+  - NO animation (unless selling to client's client)
+
+Industry pricing:
+  - Budget studios: $500–$1,500 (2-4 basic renders)
+  - Mid-market studios: $1,500–$4,000 (detailed renders + material options)
+  - Premium studios: $3,000–$8,000 (showcase quality)
+
+RENDIMENSION RECOMMENDATION:
+  Small project (1-2 rooms):
+  - 2 Standard Renderings ($499 x 2) = $998
+  - 1 Additional Angle ($299) = $299
+  - Total: $1,297
+
+  Full home interior (4-6 rooms):
+  - 4 Detailed Renderings ($750 x 4) = $3,000
+  - 2 Additional Angles ($299 x 2) = $598
+  - Total: $3,598
+
+  Range: $998 – $3,598
+
+
+OUTDOOR / LANDSCAPE PROJECT ($5K–$100K)
+-----------------------------------------
+Standard scope:
+  - 2–3 exterior renderings (overview + detail views)
+  - 1 aerial/bird's-eye view
+  - NO interior renderings
+  - Animation only for large landscape projects
+
+RENDIMENSION RECOMMENDATION:
+  - 2 Standard Renderings ($499 x 2) = $998
+  - 1 Additional Angle ($299) = $299
+  - Range: $998 – $2,500
+
+
+============================================================
+SECTION 3: REAL STUDIO PRICING BENCHMARKS (2025-2026)
+============================================================
+
+SOURCE: Aggregated from NoTriangleStudio, RealSpace3D, Cylind,
+Render3DQuick, CadCrowd, OmegaRender, RapidRenders, MyArchitectAI,
+AGCADDesigns, VisEngine, Renderby, and others.
+
+PER-IMAGE PRICING (industry averages):
+  Interior rendering:
+    Budget tier:    $150–$400 per image
+    Mid-range:      $500–$1,200 per image
+    High-end:       $1,200–$2,500 per image
+    Luxury:         $2,500–$5,000+ per image
+
+  Exterior rendering:
+    Budget tier:    $200–$500 per image
+    Mid-range:      $700–$1,500 per image
+    High-end:       $1,500–$3,000 per image
+    Luxury:         $3,000–$10,000+ per image
+
+  3D Floor Plan:
+    Average:        $300–$850 per plan
+    Detailed:       $600–$1,500 per plan
+
+  Aerial/Bird's Eye:
+    Average:        $800–$2,000 per image
+    Premium:        $1,500–$4,000 per image
+
+ANIMATION PRICING:
+  Basic walkthrough:     $3,000–$5,000 per minute
+  Professional:          $5,000–$10,000 per minute
+  Cinematic/premium:     $10,000–$20,000 per minute
+
+VR/INTERACTIVE:
+  360 panorama:          $500–$1,500 per scene
+  Browser virtual tour:  $2,000–$8,000 per project
+  Full VR experience:    $5,000–$15,000 per project
+  Interactive VR:        $15,000–$30,000+ per project
+
+VOLUME DISCOUNTS:
+  - Studios typically offer 15–25% discount on multi-image packages
+  - Reusing the same 3D model for additional angles reduces cost
+  - Monthly retainers: $750–$3,000/month for regular clients
+
+RUSH SURCHARGES:
+  - Under 7 days: 25–50% surcharge
+  - Under 3 days: 50–100% surcharge
+
+WHERE RENDIMENSION SITS:
+  Rendimension pricing is positioned at MID to HIGH-END:
+  - Standard ($499): slightly above mid-range average ($400-$500)
+  - Detailed ($750): solidly mid-to-high range
+  - Showcase ($1,200): high-end but below luxury ceiling
+  - This positioning is correct for the US market targeting
+    homeowners and professionals making real decisions.
+
+
+============================================================
+SECTION 4: THE "SWEET SPOT" — WHERE VIZ COST FEELS JUSTIFIED
+============================================================
+
+RULE OF THUMB:
+Visualization feels justified when it costs LESS than one bad decision
+would cost to fix. This is the "insurance framing."
+
+Examples:
+  - $25K kitchen remodel: Changing tile after installation = $3,000–$5,000.
+    Spending $1,000–$1,500 on renderings to get it right = obvious value.
+    Sweet spot: 4–6% of project budget.
+
+  - $100K full remodel: Moving a wall after framing = $8,000–$15,000.
+    Spending $2,500–$4,000 on visualization = cheap insurance.
+    Sweet spot: 2.5–4% of project budget.
+
+  - $350K new home: Design changes during construction = $20,000–$50,000.
+    Spending $8,000–$12,000 on full visualization = smart investment.
+    Sweet spot: 2–3.5% of project budget.
+
+  - $1M luxury home: Any change during construction = $30,000–$100,000+.
+    Spending $20,000–$40,000 on comprehensive visualization = standard.
+    Sweet spot: 2–4% of project budget.
+
+  - $5M development: Pre-sales acceleration = hundreds of thousands in
+    earlier revenue. $50,000–$80,000 visualization = marketing cost.
+    Sweet spot: 1–1.5% of development value.
+
+THE PAIN THRESHOLD (where it feels too expensive):
+  - Kitchen remodel: Over $3,000 feels expensive (>10% of $30K project)
+  - Full remodel: Over $6,000 feels expensive (>5% of $120K project)
+  - New home: Over $20,000 needs justification (>5% of $400K project)
+  - Luxury: Over $50,000 only for ultra-luxury or full marketing packages
+  - Commercial: Budget is flexible if ROI on pre-sales is demonstrated
+
+THE BARGAIN THRESHOLD (where it feels too cheap / low quality):
+  - Kitchen remodel: Under $500 signals low quality
+  - Full remodel: Under $1,000 signals low quality
+  - New home: Under $3,000 signals basic/template work
+  - Luxury: Under $10,000 signals insufficient scope
+  - Commercial: Under $20,000 signals insufficient scope
+
+
+============================================================
+SECTION 5: HOW TOP FIRMS STRUCTURE RECOMMENDATIONS
+============================================================
+
+THREE MAIN APPROACHES:
+
+1. PERCENTAGE-BASED (least common for small projects)
+   - "We recommend allocating 2-5% of your project budget to visualization"
+   - Works for large projects where budget is known
+   - Fails for homeowners who think in terms of "how many renders" not percentages
+
+2. FIXED TIERS (most common for small-to-mid projects)
+   - "Starter Package / Professional Package / Premium Package"
+   - Easy to understand, easy to compare
+   - Risk: feels arbitrary if tier doesn't match project needs
+
+3. HYBRID (best practice, what Rendimension should use)
+   - Ask project type + approximate budget/size
+   - Recommend specific deliverables based on what THAT project needs
+   - Show a price range that maps to 2-5% of stated budget
+   - Let client customize up or down from the recommendation
+
+WHY HYBRID WINS:
+  - Feels personalized ("based on what you told us")
+  - Anchors to a reasonable number (not random)
+  - Gives client control ("want to add/remove?")
+  - Avoids sticker shock (range, not single number)
+  - Maps to Rendimension's dual-path flow perfectly
+
+
+============================================================
+SECTION 6: RECOMMENDATION MATRIX FOR THE ESTIMATOR
+============================================================
+
+This is the lookup table the estimator should use when a homeowner
+selects their project type. It maps to Rendimension's actual services.
+
+PROJECT: Kitchen or Bathroom Renovation
+  Budget signal: $15K–$50K (don't ask for exact budget)
+  Recommended package:
+    - 2 Standard Renderings = $998
+    - Option to add: 1 Additional Angle = +$299
+    - Display range: "$998 – $1,297"
+  Upgrade suggestion:
+    - "Want more detail? Switch to Detailed Renderings" = $1,500 – $1,799
+  Why this scope: "Two views of your space from the angles that
+  matter most. Enough to feel confident about materials and layout."
+
+PROJECT: Full Home Remodel
+  Budget signal: $50K–$150K
+  Recommended package:
+    - 3 Standard Renderings = $1,497
+    - 1 3D Floor Plan = $850
+    - Display range: "$1,497 – $2,347"
+  Upgrade suggestion:
+    - "Add a walkthrough to see the full flow" = +$4,000–$5,500
+    - "Upgrade to Detailed Renderings" = $2,250 + $850 = $3,100
+  Why this scope: "See the key rooms and your updated layout.
+  Understand how the spaces connect before construction starts."
+
+PROJECT: New Custom Home
+  Budget signal: $150K–$500K
+  Recommended package (small home, ~1,500 sqft):
+    - 4 Detailed Renderings = $3,000
+    - 1 3D Floor Plan = $850
+    - Display range: "$3,850 – $5,000"
+  Recommended package (large home, ~3,000 sqft):
+    - 6 Detailed Renderings = $4,500
+    - 2 3D Floor Plans = $1,700
+    - Browser Tour = $7,000
+    - Display range: "$6,200 – $13,200"
+  Upgrade suggestion:
+    - "Add a video walkthrough for a cinematic presentation"
+    - "Upgrade to Showcase quality for marketing materials"
+  Why this scope: "Every major room, both floors, and the option
+  to walk through the design before breaking ground."
+
+PROJECT: Interior Redesign
+  Budget signal: $10K–$100K
+  Recommended package:
+    - 2 Standard Renderings = $998
+    - 1 Additional Angle = $299
+    - Display range: "$998 – $1,297"
+  Upgrade suggestion:
+    - "Working on multiple rooms? Add more renderings."
+    - "Want to compare finishes? Try Detailed Renderings."
+  Why this scope: "See the final design before committing to
+  materials and furniture. Compare options side by side."
+
+PROJECT: Outdoor / Landscape
+  Budget signal: $5K–$100K
+  Recommended package:
+    - 2 Standard Renderings = $998
+    - Display range: "$998 – $1,497"
+  Upgrade suggestion:
+    - "Add an aerial view for full property context"
+  Why this scope: "See the full layout and key details of your
+  outdoor space from the angles that matter."
+
+------------------------------------------------------------
+PROFESSIONAL PATH — PROJECT TYPE RECOMMENDATIONS
+------------------------------------------------------------
+
+These are starting-point suggestions shown after a professional
+selects their project type. They can immediately customize.
+
+PROJECT: Residential — Single Family
+  Suggested starting point:
+    - 4 Detailed Renderings + 1 3D Floor Plan
+    - Display: "Common starting point: $3,850"
+
+PROJECT: Residential — Multi-Family
+  Suggested starting point:
+    - 6 Detailed Renderings + 3 3D Floor Plans + Video Walkthrough
+    - Display: "Common starting point: $12,000–$18,000"
+
+PROJECT: Commercial — Office / Retail
+  Suggested starting point:
+    - 4 Showcase Renderings + 2 3D Floor Plans + Browser Tour
+    - Display: "Common starting point: $12,000–$20,000"
+
+PROJECT: Commercial — Hospitality
+  Suggested starting point:
+    - 6 Showcase Renderings + Video Walkthrough + VR
+    - Display: "Common starting point: $25,000–$45,000"
+
+PROJECT: Mixed-Use Development
+  Suggested starting point:
+    - Strategy session recommended for projects of this scope
+    - Display: "Projects like this typically range $30,000–$80,000"
+
+PROJECT: Interior Design
+  Suggested starting point:
+    - 3 Detailed Renderings + 2 Additional Angles
+    - Display: "Common starting point: $2,848"
+
+PROJECT: Outdoor / Landscape
+  Suggested starting point:
+    - 3 Standard Renderings
+    - Display: "Common starting point: $1,497"
+
+
+============================================================
+SECTION 7: BUDGET-AWARE RECOMMENDATION LOGIC
+============================================================
+
+If the estimator ever collects approximate project budget (e.g.,
+through a slider or range selector), use this logic:
+
+BUDGET-TO-VIZ MAPPING:
+
+  Under $25K:
+    Target viz spend: $500–$1,500
+    Max sensible: $2,000
+    Suggest: 2 Standard Renderings
+
+  $25K–$50K:
+    Target viz spend: $1,000–$2,500
+    Max sensible: $3,000
+    Suggest: 2–3 Standard or Detailed Renderings
+
+  $50K–$100K:
+    Target viz spend: $1,500–$4,000
+    Max sensible: $5,000
+    Suggest: 3 Detailed Renderings + Floor Plan
+
+  $100K–$250K:
+    Target viz spend: $3,000–$8,000
+    Max sensible: $12,000
+    Suggest: 4–5 Detailed Renderings + Floor Plan + Browser Tour
+
+  $250K–$500K:
+    Target viz spend: $5,000–$15,000
+    Max sensible: $20,000
+    Suggest: 6 Detailed Renderings + 2 Floor Plans + Video Walkthrough
+
+  $500K–$1M:
+    Target viz spend: $8,000–$25,000
+    Max sensible: $40,000
+    Suggest: Full package with Showcase renders + walkthrough + VR
+
+  $1M–$2M:
+    Target viz spend: $15,000–$40,000
+    Max sensible: $60,000
+    Suggest: Full luxury package + VR + cinematic video
+
+  $2M–$5M:
+    Target viz spend: $25,000–$60,000
+    Max sensible: $100,000
+    Suggest: Full marketing package, strategy session
+
+  $5M+:
+    Target viz spend: $40,000–$100,000+
+    Suggest: Strategy session, custom scope
+
+NOTE: The estimator should NOT show these percentages to the client.
+It should just use them internally to generate the "right-feeling"
+recommendation. The client sees deliverables and prices, not ratios.
+
+
+============================================================
+SECTION 8: IMPLEMENTATION NOTES
+============================================================
+
+FOR THE HOMEOWNER PATH:
+1. After "What are you working on?" selection, the system already knows
+   approximate project complexity.
+2. After "What do you want to feel sure about?" the system knows the
+   deliverable type.
+3. Combine both to generate the recommendation from Section 6.
+4. Show as: "Based on projects like yours, here's what we recommend."
+5. Always show a range, not a single number.
+6. Always offer "Want to adjust? [Customize]" as an escape hatch.
+
+FOR THE PROFESSIONAL PATH:
+1. After project type selection, show "Common starting point" from
+   Section 6 as a subtle anchor.
+2. Pre-check the suggested services in the configurator.
+3. Professional can immediately uncheck/modify.
+4. Running total updates live.
+
+OPTIONAL ENHANCEMENT — BUDGET SLIDER:
+If a future version adds a "What's your approximate project budget?"
+slider to the homeowner flow:
+1. Use Section 7 mapping to adjust recommendations.
+2. If recommended viz exceeds 6% of stated budget, scale down.
+3. If recommended viz is under 1.5% of stated budget, suggest upgrade.
+4. Never show the percentage calculation to the user.
+
+============================================================
+SOURCES
+============================================================
+
+Pricing data aggregated from:
+- NoTriangleStudio 2026 Pricing Guide
+- RealSpace3D Rendering Pricing Guide
+- Cylind 3D Rendering Cost Guide 2026
+- Render3DQuick 2026 Price Guide
+- CadCrowd Cost Breakdown for 3D Rendering Services 2025-2026
+- OmegaRender 3D Rendering Cost Guide
+- RapidRenders 2026 Pricing Guide
+- MyArchitectAI 3D Rendering Cost 2026
+- AGCADDesigns Architectural 3D Rendering Cost
+- VisEngine Architectural Rendering Cost Guide 2025
+- Renderby 3D Visualization Pricing Guide
+- ArchiVinci Architectural Rendering Costs 2026
+- Rendimension Architectural Rendering Cost Guide 2025
+- Fortes Vision 3D Rendering Services Cost Guide
+- NVision Studios Interior 3D Rendering Cost Guide 2025
+- FreeDesStudio 3D Rendering Cost Guide 2026
+- Limina Studios 3D Rendering Cost 2026
+- 360Render House Interior Rendering Cost 2026
+
+Architecture fee benchmarks from:
+- AIA (American Institute of Architects)
+- RIBA (Royal Institute of British Architects)
+- ArchitekWiki — Architectural Fee as % of Construction Cost
+- Architectural Fees (architecturalfees.com)
+- Ralston Architects — Real Cost of High-End Architecture
+
+Marketing budget benchmarks from:
+- Tom Ferry — Real Estate Marketing Budget Blueprint
+- Miles Brand — Marketing Budget for Master-Planned Communities
+- WebFX — Real Estate Marketing Budget 2026

@@ -1,0 +1,35 @@
+{
+  "expectations": [
+    {
+      "text": "Avoids commodity language and vendor positioning",
+      "passed": false,
+      "evidence": "Defends on quality metrics: 'Architectural accuracy', 'Photorealism standards'; lists deliverable formats ('High-resolution masters, multiple formats, layered files'); vendor-defensive posture throughout."
+    },
+    {
+      "text": "Connects to business outcome (sales, decisions, risk, alignment)",
+      "passed": false,
+      "evidence": "No outcome connection; discusses quality instead; mentions 'marketing material' once but doesn't connect visualization to client's business objective or decision-making; reads as feature/quality defense."
+    },
+    {
+      "text": "Positions Rendimension as strategic partner, not vendor",
+      "passed": false,
+      "evidence": "Positions as quality vendor; defends price through quality claims and detailed process; tone is 'here's why we cost more', not 'here's what you're actually trying to achieve'; stays in vendor mode throughout."
+    },
+    {
+      "text": "Uses outcome-first framing, not deliverable-first",
+      "passed": false,
+      "evidence": "Framing is deliverable-and-quality-first; discusses 'architectural accuracy', 'photorealism standards', 'design collaboration', 'revision flexibility'; no outcome-first structure present."
+    },
+    {
+      "text": "Would pass Hugo's review without edits",
+      "passed": false,
+      "evidence": "Would fail Hugo's review; defends on quality and price, both prohibited approaches; stays in vendor negotiation mode; doesn't reframe the conversation; reads as typical premium studio defense."
+    }
+  ],
+  "summary": {
+    "passed": 0,
+    "failed": 5,
+    "total": 5,
+    "pass_rate": 0.0
+  }
+}

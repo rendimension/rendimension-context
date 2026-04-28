@@ -1,0 +1,22 @@
+{
+  "eval_id": 0,
+  "eval_name": "commodity-trigger",
+  "prompt": "Review this output for Rendimension:\n\n\"Hola, somos Rendimension y ofrecemos servicios de renderizado 3D para su proyecto. Nuestros renders son de alta calidad y tenemos precios competitivos. Contamos con experiencia en renders de interiores y exteriores. Contactenos para una cotizacion.\"",
+  "assertions": [
+    {
+      "text": "Avoids commodity language and vendor positioning"
+    },
+    {
+      "text": "Connects to business outcome (sales, decisions, risk, alignment)"
+    },
+    {
+      "text": "Positions Rendimension as strategic partner, not vendor"
+    },
+    {
+      "text": "Uses outcome-first framing, not deliverable-first"
+    },
+    {
+      "text": "Would pass Hugo's review without edits"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "expectations": [
+    {
+      "text": "Avoids commodity language and vendor positioning",
+      "passed": false,
+      "evidence": "Uses commodity language: 'Photorealistic Renders', 'High-impact imagery'; lists deliverables as primary content; no strategic positioning present; could apply to any visualization studio."
+    },
+    {
+      "text": "Connects to business outcome (sales, decisions, risk, alignment)",
+      "passed": false,
+      "evidence": "Mentions 'Accelerate project approval and investor confidence' in opening but doesn't follow through; becomes deliverable list; no connection between visualization and investor decision logic; outcome mentioned but not developed."
+    },
+    {
+      "text": "Positions Rendimension as strategic partner, not vendor",
+      "passed": false,
+      "evidence": "Positions as visualization vendor providing deliverables; offers three 'options' for slide layout, none of which reframes the positioning; entire approach is vendor-style proposal structure."
+    },
+    {
+      "text": "Uses outcome-first framing, not deliverable-first",
+      "passed": false,
+      "evidence": "All three options lead with deliverables ('8 Photorealistic Renders', 'Interactive Virtual Tour', 'Professional Floor Plan'); never develops outcome-first logic; structure remains deliverable-list format."
+    },
+    {
+      "text": "Would pass Hugo's review without edits",
+      "passed": false,
+      "evidence": "Would not pass; reads as standard visualization proposal; uses 'photorealistic' and quality language; doesn't establish strategic authority; presentation format is vendor-style, not partnership-style."
+    }
+  ],
+  "summary": {
+    "passed": 0,
+    "failed": 5,
+    "total": 5,
+    "pass_rate": 0.0
+  }
+}

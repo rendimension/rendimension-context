@@ -1,0 +1,35 @@
+{
+  "expectations": [
+    {
+      "text": "Avoids commodity language and vendor positioning",
+      "passed": false,
+      "evidence": "Uses commodity language throughout: 'Rendimension es tu socio ideal', 'renders 3D de alta calidad fotorrealista'; emphasizes quality metrics instead of outcomes; describes as 'socio' verbally but content is pure vendor description."
+    },
+    {
+      "text": "Connects to business outcome (sales, decisions, risk, alignment)",
+      "passed": false,
+      "evidence": "No connection to business outcomes; mentions 'cautivan clientes e inversores' but provides no strategic logic; reads as list of services without explaining what problem is solved or what decision is supported."
+    },
+    {
+      "text": "Positions Rendimension as strategic partner, not vendor",
+      "passed": false,
+      "evidence": "Claims 'socio ideal' but content is pure vendor positioning; presents 'renders de interiores y exteriores de calidad premium' and 'precios competitivos', the exact vendor language Hugo prohibits."
+    },
+    {
+      "text": "Uses outcome-first framing, not deliverable-first",
+      "passed": false,
+      "evidence": "Completely deliverable-first; leads with services list ('renders de interiores', 'presentaciones visuales'); no outcome framing present; inverted value hierarchy."
+    },
+    {
+      "text": "Would pass Hugo's review without edits",
+      "passed": false,
+      "evidence": "Would not pass; sounds like generic visualization studio; uses 'quality' and 'competitive prices' (explicitly prohibited); could come from any low-cost freelancer; fails identity test completely."
+    }
+  ],
+  "summary": {
+    "passed": 0,
+    "failed": 5,
+    "total": 5,
+    "pass_rate": 0.0
+  }
+}

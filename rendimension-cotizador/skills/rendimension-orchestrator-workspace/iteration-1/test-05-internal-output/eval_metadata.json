@@ -1,0 +1,22 @@
+{
+  "eval_id": 4,
+  "eval_name": "internal-output",
+  "prompt": "Review this draft response from a Rendimension team member:\n\n\"Thank you for your inquiry. We can provide 5 high-quality renders, 2 revisions per image, and a delivery time of 7 business days. Total price is based on the number of views.\"",
+  "assertions": [
+    {
+      "text": "Avoids commodity language and vendor positioning"
+    },
+    {
+      "text": "Connects to business outcome (sales, decisions, risk, alignment)"
+    },
+    {
+      "text": "Positions Rendimension as strategic partner, not vendor"
+    },
+    {
+      "text": "Uses outcome-first framing, not deliverable-first"
+    },
+    {
+      "text": "Would pass Hugo's review without edits"
+    }
+  ]
+}

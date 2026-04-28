@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eval Review</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js" integrity="sha384-EnyY0/GSHQGSxSgMwaIPzSESbqoOLSexfnSMN2AP+39Ckmn92stwABZynq1JyzdT" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --bg: #faf9f5;
+      --surface: #ffffff;
+      --border: #e8e6dc;
+      --text: #141413;
+      --text-muted: #b0aea5;
+      --accent: #d97757;
+      --accent-hover: #c4613f;
+      --green: #788c5d;
+      --green-bg: #eef2e8;
+      --red: #c44;
+      --red-bg: #fceaea;
+      --header-bg: #141413;
+      --header-text: #faf9f5;
+      --radius: 6px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Lora', Georgia, serif;
+      background: var(--bg);
+      color: var(--text);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ---- Header ---- */
+    .header {
+      background: var(--header-bg);
+      color: var(--header-text);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .header h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+    .header .instructions {
+      font-size: 0.8rem;
+      opacity: 0.7;
+      margin-top: 0.25rem;
+    }
+    .header .progress {
+      font-size: 0.875rem;
+      opacity: 0.8;
+      text-align: right;
+    }
+
+    /* ---- Main content ---- */
+    .main {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    /* ---- Sections ---- */
+    .section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      flex-shrink: 0;
+    }
+    .section-header {
+      font-family: 'Poppins', sans-serif;
+      padding: 0.75rem 1rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
+    }
+    .section-body {
+      padding: 1rem;
+    }
+
+    /* ---- Config badge ---- */
+    .config-badge {
+      display: inline-block;
+      padding: 0.2rem 0.625rem;
+      border-radius: 9999px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin-left: 0.75rem;
+      vertical-align: middle;
+    }
+    .config-badge.config-primary {
+      background: rgba(33, 150, 243, 0.12);
+      color: #1976d2;
+    }
+    .config-badge.config-baseline {
+      background: rgba(255, 193, 7, 0.15);
+      color: #f57f17;
+    }
+
+    /* ---- Prompt ---- */
+    .prompt-text {
+      white-space: pre-wrap;
+      font-size: 0.9375rem;
+      line-height: 1.6;
+    }
+
+    /* ---- Outputs ---- */
+    .output-file {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .output-file + .output-file {
+      margin-top: 1rem;
+    }
+    .output-file-header {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      font-family: 'SF Mono', SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .output-file-header .dl-btn {
+      font-size: 0.7rem;
+      color: var(--accent);
+      text-decoration: none;
+      cursor: pointer;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-weight: 500;
+      opacity: 0.8;
+    }
+    .output-file-header .dl-btn:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
+    .output-file-content {
+      padding: 0.75rem;
+      overflow-x: auto;
+    }
+    .output-file-content pre {
+      font-size: 0.8125rem;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: 'SF Mono', SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+    }
+    .output-file-content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+    .output-file-content iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+    }
+    .output-file-content table {
+      border-collapse: collapse;
+      font-size: 0.8125rem;
+      width: 100%;
+    }
+    .output-file-content table td,
+    .output-file-content table th {
+      border: 1px solid var(--border);
+      padding: 0.375rem 0.5rem;
+      text-align: left;
+    }
+    .output-file-content table th {
+      background: var(--bg);
+      font-weight: 600;
+    }
+    .output-file-content .download-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.875rem;
+      cursor: pointer;
+    }
+    .output-file-content .download-link:hover {
+      background: var(--border);
+    }
+    .empty-state {
+      color: var(--text-muted);
+      font-style: italic;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    /* ---- Feedback ---- */
+    .prev-feedback {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.625rem 0.75rem;
+      margin-top: 0.75rem;
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .prev-feedback-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.25rem;
+      color: var(--text-muted);
+    }
+    .feedback-textarea {
+      width: 100%;
+      min-height: 100px;
+      padding: 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 0.9375rem;
+      line-height: 1.5;
+      resize: vertical;
+      color: var(--text);
+    }
+    .feedback-textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+    .feedback-status {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+      min-height: 1.1em;
+    }
+
+    /* ---- Grades (collapsible) ---- */
+    .grades-toggle {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+    }
+    .grades-toggle:hover {
+      color: var(--accent);
+    }
+    .grades-toggle .arrow {
+      margin-right: 0.5rem;
+      transition: transform 0.15s;
+      font-size: 0.75rem;
+    }
+    .grades-toggle .arrow.open {
+      transform: rotate(90deg);
+    }
+    .grades-content {
+      display: none;
+      margin-top: 0.75rem;
+    }
+    .grades-content.open {
+      display: block;
+    }
+    .grades-summary {
+      font-size: 0.875rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .grade-badge {
+      display: inline-block;
+      padding: 0.125rem 0.5rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .grade-pass { background: var(--green-bg); color: var(--green); }
+    .grade-fail { background: var(--red-bg); color: var(--red); }
+    .assertion-list {
+      list-style: none;
+    }
+    .assertion-item {
+      padding: 0.625rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.8125rem;
+    }
+    .assertion-item:last-child { border-bottom: none; }
+    .assertion-status {
+      font-weight: 600;
+      margin-right: 0.5rem;
+    }
+    .assertion-status.pass { color: var(--green); }
+    .assertion-status.fail { color: var(--red); }
+    .assertion-evidence {
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      margin-top: 0.25rem;
+      padding-left: 1.5rem;
+    }
+
+    /* ---- View tabs ---- */
+    .view-tabs {
+      display: flex;
+      gap: 0;
+      padding: 0 2rem;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .view-tab {
+      font-family: 'Poppins', sans-serif;
+      padding: 0.625rem 1.25rem;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: var(--text-muted);
+      border-bottom: 2px solid transparent;
+      transition: all 0.15s;
+    }
+    .view-tab:hover { color: var(--text); }
+    .view-tab.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+    .view-panel { display: none; }
+    .view-panel.active { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
+
+    /* ---- Benchmark view ---- */
+    .benchmark-view {
+      padding: 1.5rem 2rem;
+      overflow-y: auto;
+      flex: 1;
+    }
+    .benchmark-table {
+      border-collapse: collapse;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 0.8125rem;
+      width: 100%;
+      margin-bottom: 1.5rem;
+    }
+    .benchmark-table th, .benchmark-table td {
+      padding: 0.625rem 0.75rem;
+      text-align: left;
+      border: 1px solid var(--border);
+    }
+    .benchmark-table th {
+      font-family: 'Poppins', sans-serif;
+      background: var(--header-bg);
+      color: var(--header-text);
+      font-weight: 500;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .benchmark-table tr:hover { background: var(--bg); }
+    .benchmark-table tr.benchmark-row-with { background: rgba(33, 150, 243, 0.06); }
+    .benchmark-table tr.benchmark-row-without { background: rgba(255, 193, 7, 0.06); }
+    .benchmark-table tr.benchmark-row-with:hover { background: rgba(33, 150, 243, 0.12); }
+    .benchmark-table tr.benchmark-row-without:hover { background: rgba(255, 193, 7, 0.12); }
+    .benchmark-table tr.benchmark-row-avg { font-weight: 600; border-top: 2px solid var(--border); }
+    .benchmark-table tr.benchmark-row-avg.benchmark-row-with { background: rgba(33, 150, 243, 0.12); }
+    .benchmark-table tr.benchmark-row-avg.benchmark-row-without { background: rgba(255, 193, 7, 0.12); }
+    .benchmark-delta-positive { color: var(--green); font-weight: 600; }
+    .benchmark-delta-negative { color: var(--red); font-weight: 600; }
+    .benchmark-notes {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem;
+    }
+    .benchmark-notes h3 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.875rem;
+      margin-bottom: 0.75rem;
+    }
+    .benchmark-notes ul {
+      list-style: disc;
+      padding-left: 1.25rem;
+    }
+    .benchmark-notes li {
+      font-size: 0.8125rem;
+      line-height: 1.6;
+      margin-bottom: 0.375rem;
+    }
+    .benchmark-empty {
+      color: var(--text-muted);
+      font-style: italic;
+      text-align: center;
+      padding: 3rem;
+    }
+
+    /* ---- Navigation ---- */
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+      flex-shrink: 0;
+    }
+    .nav-btn {
+      font-family: 'Poppins', sans-serif;
+      padding: 0.5rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text);
+      transition: all 0.15s;
+    }
+    .nav-btn:hover:not(:disabled) {
+      background: var(--bg);
+      border-color: var(--text-muted);
+    }
+    .nav-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    .done-btn {
+      font-family: 'Poppins', sans-serif;
+      padding: 0.5rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: all 0.15s;
+    }
+    .done-btn:hover {
+      background: var(--bg);
+      border-color: var(--text-muted);
+    }
+    .done-btn.ready {
+      border: none;
+      background: var(--accent);
+      color: white;
+      font-weight: 600;
+    }
+    .done-btn.ready:hover {
+      background: var(--accent-hover);
+    }
+    /* ---- Done overlay ---- */
+    .done-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 100;
+      justify-content: center;
+      align-items: center;
+    }
+    .done-overlay.visible {
+      display: flex;
+    }
+    .done-card {
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 2rem 3rem;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      max-width: 500px;
+    }
+    .done-card h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .done-card p {
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+    .done-card .btn-row {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+    .done-card button {
+      padding: 0.5rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      cursor: pointer;
+      font-size: 0.875rem;
+    }
+    .done-card button:hover {
+      background: var(--bg);
+    }
+    /* ---- Toast ---- */
+    .toast {
+      position: fixed;
+      bottom: 5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--header-bg);
+      color: var(--header-text);
+      padding: 0.625rem 1.25rem;
+      border-radius: var(--radius);
+      font-size: 0.875rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+      z-index: 200;
+    }
+    .toast.visible {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" style="height:100vh; display:flex; flex-direction:column;">
+    <div class="header">
+      <div>
+        <h1>Eval Review: <span id="skill-name"></span></h1>
+        <div class="instructions">Review each output and leave feedback below. Navigate with arrow keys or buttons. When done, copy feedback and paste into Claude Code.</div>
+      </div>
+      <div class="progress" id="progress"></div>
+    </div>
+
+    <!-- View tabs (only shown when benchmark data exists) -->
+    <div class="view-tabs" id="view-tabs" style="display:none;">
+      <button class="view-tab active" onclick="switchView('outputs')">Outputs</button>
+      <button class="view-tab" onclick="switchView('benchmark')">Benchmark</button>
+    </div>
+
+    <!-- Outputs panel (qualitative review) -->
+    <div class="view-panel active" id="panel-outputs">
+    <div class="main">
+      <!-- Prompt -->
+      <div class="section">
+        <div class="section-header">Prompt <span class="config-badge" id="config-badge" style="display:none;"></span></div>
+        <div class="section-body">
+          <div class="prompt-text" id="prompt-text"></div>
+        </div>
+      </div>
+
+      <!-- Outputs -->
+      <div class="section">
+        <div class="section-header">Output</div>
+        <div class="section-body" id="outputs-body">
+          <div class="empty-state">No output files found</div>
+        </div>
+      </div>
+
+      <!-- Previous Output (collapsible) -->
+      <div class="section" id="prev-outputs-section" style="display:none;">
+        <div class="section-header">
+          <div class="grades-toggle" onclick="togglePrevOutputs()">
+            <span class="arrow" id="prev-outputs-arrow">&#9654;</span>
+            Previous Output
+          </div>
+        </div>
+        <div class="grades-content" id="prev-outputs-content"></div>
+      </div>
+
+      <!-- Grades (collapsible) -->
+      <div class="section" id="grades-section" style="display:none;">
+        <div class="section-header">
+          <div class="grades-toggle" onclick="toggleGrades()">
+            <span class="arrow" id="grades-arrow">&#9654;</span>
+            Formal Grades
+          </div>
+        </div>
+        <div class="grades-content" id="grades-content"></div>
+      </div>
+
+      <!-- Feedback -->
+      <div class="section">
+        <div class="section-header">Your Feedback</div>
+        <div class="section-body">
+          <textarea
+            class="feedback-textarea"
+            id="feedback"
+            placeholder="What do you think of this output? Any issues, suggestions, or things that look great?"
+          ></textarea>
+          <div class="feedback-status" id="feedback-status"></div>
+          <div class="prev-feedback" id="prev-feedback" style="display:none;">
+            <div class="prev-feedback-label">Previous feedback</div>
+            <div id="prev-feedback-text"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav" id="outputs-nav">
+      <button class="nav-btn" id="prev-btn" onclick="navigate(-1)">&#8592; Previous</button>
+      <button class="done-btn" id="done-btn" onclick="showDoneDialog()">Submit All Reviews</button>
+      <button class="nav-btn" id="next-btn" onclick="navigate(1)">Next &#8594;</button>
+    </div>
+    </div><!-- end panel-outputs -->
+
+    <!-- Benchmark panel (quantitative stats) -->
+    <div class="view-panel" id="panel-benchmark">
+      <div class="benchmark-view" id="benchmark-content">
+        <div class="benchmark-empty">No benchmark data available. Run a benchmark to see quantitative results here.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Done overlay -->
+  <div class="done-overlay" id="done-overlay">
+    <div class="done-card">
+      <h2>Review Complete</h2>
+      <p>Your feedback has been saved. Go back to your Claude Code session and tell Claude you're done reviewing.</p>
+      <div class="btn-row">
+        <button onclick="closeDoneDialog()">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // ---- Embedded data (injected by generate_review.py) ----
+    const EMBEDDED_DATA = {"skill_name": "rendimension-orchestrator", "runs": [{"id": "test-01-commodity-with_skill", "prompt": "Review this output for Rendimension:\n\n\"Hola, somos Rendimension y ofrecemos servicios de renderizado 3D para su proyecto. Nuestros renders son de alta calidad y tenemos precios competitivos. Contamos con experiencia en renders de interiores y exteriores. Contactenos para una cotizacion.\"", "eval_id": 0, "outputs": [{"name": "response.md", "type": "text", "content": "# Orchestrator Review \u2014 Rendimension Output\n\n**Input:** \"Hola, somos Rendimension y ofrecemos servicios de renderizado 3D para su proyecto. Nuestros renders son de alta calidad y tenemos precios competitivos. Contamos con experiencia en renders de interiores y exteriores. Contactenos para una cotizacion.\"\n\n---\n\n## Verdict\n\n**REWRITTEN**\n\n---\n\n## Level Failures\n\n### Level 1 \u2014 Rules (Baseline Compliance)\n**FAILED** \u2014 Multiple critical violations:\n- Uses Spanish in client-facing material (rule: always use English unless client requests Spanish)\n- Leads with \"we offer 3D rendering services\" (commoditized positioning, violates core rule)\n- Uses \"renders\" and \"quality\" (should be reframed to decision tools and clarity)\n- References \"competitive prices\" (price-driven language, explicitly prohibited)\n- Missing official slogan: \"It's not seeing it. It's knowing it's right.\"\n\n### Level 2 \u2014 Logic of Decision\n**FAILED** \u2014 Output does not help the client make better decisions:\n- No connection to business outcomes (sales acceleration, risk reduction, investor confidence, stakeholder alignment)\n- Doesn't explain what problem is solved or what decision is supported\n- Reads as a service description, not a strategic value proposition\n- Client cannot determine whether Rendimension addresses their actual need\n\n### Level 3 \u2014 Business Context\n**FAILED** \u2014 No specificity:\n- Generic enough to apply to anyone (developers, homeowners, architects, agents)\n- Violates positioning rule: \"Generic copy that could apply to anyone is a sign of lazy positioning\"\n- Doesn't identify client type or project stage\n- Treats all clients the same instead of speaking to their specific situation\n\n### Level 4 \u2014 Value Hierarchy\n**FAILED** \u2014 Completely inverted:\n- Starts with tools (\"we make renders\") instead of outcomes\n- Emphasizes deliverables (renders, quality) before business objectives\n- Should lead with outcome, then strategy, then system, then tool \u2014 instead leads with tool\n- No mention of how visuals enable persuasion, alignment, confidence, or understanding\n\n### Level 5 \u2014 Criterion (Hugo Test)\n**FAILED** \u2014 Would not pass:\n- Reads like a freelancer bio or Fiverr profile\n- Sounds like a rendering vendor, not a strategic partner\n- Could only justify a $500 transaction, not a $10K\u2013$50K strategic engagement\n- Hugo would rewrite everything before sending to a professional client\n\n---\n\n## Corrected Output\n\n---\n\n**We don't help you see your project. We help you know it's right.**\n\nMost projects are validated during construction\u2014which is when changes cost the most. Rendimension shortens that timeline by moving critical decisions before the first dollar is spent.\n\nWe work with developers, architects, and designers to build visual decision tools that accelerate approvals, strengthen investor confidence, and reduce costly revisions. Our strategic visualization approach has compressed project timelines and improved stakeholder alignment across interior, exterior, and mixed-use developments.\n\nIf your project depends on getting stakeholder buy-in fast\u2014or making confident design decisions before construction\u2014let's talk about how visualization can support that.\n\n---\n\n## Key Changes\n\n- **Repositioned from vendor to partner**: Removed \"we offer rendering services\" and replaced with outcome-focused messaging that emphasizes decision support and business impact (faster approvals, reduced costs, less risk).\n\n- **Inverted the value hierarchy**: Now leads with the problem solved (decisions validated before construction) and the commercial outcome (risk reduction, faster timelines), with visual tools mentioned as the strategic mechanism\u2014not as the product itself.\n\n- **Added strategic authority and specificity**: Language now reflects business-facing positioning and speaks directly to real commercial objectives (investor confidence, stakeholder alignment, design validation) instead of listing features or requesting a generic quote.\n\n---\n\n## Internal Scorecard\n\n- **Positioning Alignment**: Original 1/5 \u2192 Corrected 5/5\n- **Outcome Framing**: Original 0/5 \u2192 Corrected 5/5\n- **Premium Tone**: Original 1/5 \u2192 Corrected 5/5\n- **Anti-Commodity Strength**: Original 0/5 \u2192 Corrected 5/5\n- **Commercial Intelligence**: Original 1/5 \u2192 Corrected 5/5\n"}], "grading": {"expectations": [{"text": "Avoids commodity language and vendor positioning", "passed": true, "evidence": "Explicitly calls out commodity language as a core failure; rejects 'renders', 'quality', 'competitive prices'; positions outcome-first messaging that eliminates vendor-speak entirely."}, {"text": "Connects to business outcome (sales, decisions, risk, alignment)", "passed": true, "evidence": "Corrected version frames around business outcomes: 'accelerate approvals, strengthen investor confidence, and reduce costly revisions' and 'move critical decisions before the first dollar is spent'."}, {"text": "Positions Rendimension as strategic partner, not vendor", "passed": true, "evidence": "Explicitly reframes from vendor to partner; corrected copy says 'strategic visualization approach' and 'visual decision tools'; scores positioning alignment 5/5."}, {"text": "Uses outcome-first framing, not deliverable-first", "passed": true, "evidence": "Value hierarchy explicitly inverted; corrected version leads with problem solved (decisions validated before construction) and outcomes, not with deliverables."}, {"text": "Would pass Hugo's review without edits", "passed": true, "evidence": "Explicitly scores Hugo Test at 5/5; corrected version positions work to justify $10K-$50K engagement, not $500 transaction; eliminates Fiverr-profile tone."}], "summary": {"passed": 5, "failed": 0, "total": 5, "pass_rate": 1.0}}}, {"id": "test-01-commodity-without_skill", "prompt": "Review this output for Rendimension:\n\n\"Hola, somos Rendimension y ofrecemos servicios de renderizado 3D para su proyecto. Nuestros renders son de alta calidad y tenemos precios competitivos. Contamos con experiencia en renders de interiores y exteriores. Contactenos para una cotizacion.\"", "eval_id": 0, "outputs": [{"name": "response.md", "type": "text", "content": "# Revisi\u00f3n y Mejora del Mensaje de Rendimension\n\n## Texto Original\n\"Hola, somos Rendimension y ofrecemos servicios de renderizado 3D para su proyecto. Nuestros renders son de alta calidad y tenemos precios competitivos. Contamos con experiencia en renders de interiores y exteriores. Contactenos para una cotizacion.\"\n\n## An\u00e1lisis de la Revisi\u00f3n\n\n### Puntos D\u00e9biles Identificados\n1. **Propuesta de valor poco clara** - El mensaje es gen\u00e9rico y no diferencia a Rendimension de la competencia\n2. **Falta de engagement** - No hay un llamado a la acci\u00f3n claro ni sentido de urgencia\n3. **Informaci\u00f3n incompleta** - No se mencionan aspectos clave como experiencia espec\u00edfica, portfolio o capacidades \u00fanicas\n4. **Tono pasivo** - La comunicaci\u00f3n podr\u00eda ser m\u00e1s din\u00e1mica y profesional\n5. **Errores menores** - \"Cont\u00e1ctenos\" requiere acento, y el cierre carece de impacto\n6. **Estructura d\u00e9bil** - Falta de organizaci\u00f3n clara de beneficios\n\n## Texto Mejorado\n\nRendimension es tu socio ideal en visualizaci\u00f3n arquitect\u00f3nica. Especializados en renders 3D de alta calidad fotorrealista, transformamos tus proyectos en presentaciones impactantes que cautivan clientes e inversores.\n\nNuestros servicios incluyen:\n- Renders de interiores y exteriores de calidad premium\n- Presentaciones visuales que comunican tus ideas con precisi\u00f3n\n- Proyectos entregados con eficiencia y profesionalismo\n- Precios competitivos sin comprometer la calidad\n\n\u00bfListo para llevar tu proyecto al siguiente nivel? Cont\u00e1ctanos hoy para una cotizaci\u00f3n personalizada y descubre por qu\u00e9 los arquitectos y desarrolladores nos eligen.\n\n## Mejoras Implementadas\n\n1. **Propuesta de valor fortalecida** - Se destaca que Rendimension es \"tu socio ideal\" y se mencionan beneficios concretos\n2. **Lenguaje m\u00e1s din\u00e1mico** - \"Transformamos\" y \"cautivan\" generan mayor impacto que \"ofrecemos\"\n3. **Estructura mejorada** - Uso de vi\u00f1etas para claridad y facilidad de lectura\n4. **Beneficios espec\u00edficos** - Se detallan los servicios ofrecidos\n5. **Llamado a la acci\u00f3n potente** - Pregunta ret\u00f3rica que motiva la acci\u00f3n inmediata\n6. **Tono conversacional y profesional** - Balance entre accesibilidad y credibilidad\n7. **Correcciones gramaticales** - Tildes correctas y puntuaci\u00f3n mejorada\n8. **Diferenciaci\u00f3n** - Se menciona que \"arquitectos y desarrolladores nos eligen\"\n"}], "grading": {"expectations": [{"text": "Avoids commodity language and vendor positioning", "passed": false, "evidence": "Uses commodity language throughout: 'Rendimension es tu socio ideal', 'renders 3D de alta calidad fotorrealista'; emphasizes quality metrics instead of outcomes; describes as 'socio' verbally but content is pure vendor description."}, {"text": "Connects to business outcome (sales, decisions, risk, alignment)", "passed": false, "evidence": "No connection to business outcomes; mentions 'cautivan clientes e inversores' but provides no strategic logic; reads as list of services without explaining what problem is solved or what decision is supported."}, {"text": "Positions Rendimension as strategic partner, not vendor", "passed": false, "evidence": "Claims 'socio ideal' but content is pure vendor positioning; presents 'renders de interiores y exteriores de calidad premium' and 'precios competitivos', the exact vendor language Hugo prohibits."}, {"text": "Uses outcome-first framing, not deliverable-first", "passed": false, "evidence": "Completely deliverable-first; leads with services list ('renders de interiores', 'presentaciones visuales'); no outcome framing present; inverted value hierarchy."}, {"text": "Would pass Hugo's review without edits", "passed": false, "evidence": "Would not pass; sounds like generic visualization studio; uses 'quality' and 'competitive prices' (explicitly prohibited); could come from any low-cost freelancer; fails identity test completely."}], "summary": {"passed": 0, "failed": 5, "total": 5, "pass_rate": 0.0}}}, {"id": "test-02-pricing-pressure-with_skill", "prompt": "Review this email for Rendimension:\n\n\"Hi David, great meeting you yesterday. As discussed, I'm sending over pricing for your project. We can deliver 5 exterior renders and 3 interiors for $6,200. Let me know if you'd like to proceed.\"", "eval_id": 1, "outputs": [{"name": "response.md", "type": "text", "content": "# Rendimension Orchestrator Review\n## Test Case: test-02-pricing-pressure\n\n**Original Email:**\n> \"Hi David, great meeting you yesterday. As discussed, I'm sending over pricing for your project. We can deliver 5 exterior renders and 3 interiors for $6,200. Let me know if you'd like to proceed.\"\n\n---\n\n## Verdict\n**REWRITTEN**\n\nThis output fails multiple core positioning rules and requires complete reconstruction.\n\n---\n\n## Level Failures\n\n**Level 1 \u2014 Rules:** \u2717 FAILED\n- Positions Rendimension as a production vendor (\"deliver 5 exterior renders and 3 interiors\")\n- Prices by deliverable count, not by strategic value\n- Transactional tone that commoditizes the service\n\n**Level 2 \u2014 Logic of Decision:** \u2717 FAILED\n- Doesn't explain what David is trying to achieve\n- Doesn't connect visualization to a business outcome (sales, approval, alignment, risk reduction)\n- No frame for why these specific visualizations matter\n\n**Level 3 \u2014 Business Context:** \u2717 FAILED\n- No identification of David's situation (what type of project? what decision is he facing?)\n- No understanding of where David is in his process\n- Generic offer that could apply to any project\n\n**Level 4 \u2014 Value Hierarchy:** \u2717 FAILED\n- Starts with deliverables (the exact opposite of required hierarchy)\n- No outcome framing\n- No strategic approach mentioned\n\n**Level 5 \u2014 Hugo Test:** \u2717 FAILED\n- Sounds like a vendor quote, not a strategic partnership\n- Could not justify premium pricing\n- Reads transactional rather than advisory\n- Hugo would reject this immediately and rewrite\n\n---\n\n## Corrected Output\n\n**Hi David,**\n\n**Before we talk about scope, let's anchor on the real goal:**\n\nFrom our conversation, it sounds like you're trying to [**secure stakeholder alignment / accelerate pre-sales / validate the design before construction / present to investors**]. That's the actual decision you need to solve for\u2014and that's what determines what you actually need from us.\n\nMost teams think they need \"renders.\" What they really need is a way to get everyone on the same page (or to convince buyers, or to catch costly mistakes early). That's a completely different conversation.\n\n**Here's what we'd structure for you:**\n\nWe'd create a **strategic visualization system** designed specifically to [**objective**], built around:\n\n- **Key decision moments** \u2014 the 2-3 visual moments that matter most for [objective]\n- **Narrative structure** \u2014 how these visuals flow together to communicate with confidence\n- **Alignment tool** \u2014 something your team can reference, revise, and move forward with\n\nThis is not about the number of images. It's about getting the right communication system in place so you can make the next decision with certainty.\n\n**The investment:**\nOur approach to this phase is **$6,200** \u2014 structured around the scope of support you need, not the number of files we produce.\n\n**What comes next:**\nBefore we finalize scope, let's make sure we're solving for the right objective. Can we schedule 15 minutes to confirm: What's the decision or approval you're trying to accelerate right now?\n\n**Best,**\nRendimension\n\n---\n\n## Key Changes\n\n1. **Reframed from deliverables to outcomes** \u2014 The email now starts with David's actual business objective (decision/approval/acceleration), not with a list of renders. This immediately positions Rendimension as a strategic partner, not a production vendor.\n\n2. **Elevated pricing language** \u2014 Pricing is now framed as \"investment in strategic support\" aligned with his objective, not as \"cost of production\" or \"price per render.\" The $6,200 becomes the investment in solving his specific problem, not the bill for 8 images.\n\n3. **Applied Authority Rule** \u2014 The tone shifted from \"here's what we can deliver\" to \"here's what we need to confirm before we proceed.\" This prevents scope creep, establishes Rendimension's standards, and positions David as needing guidance on what he actually needs (anti-commodity move).\n\n4. **Added Strategic Positioning** \u2014 Introduced language around \"visualization system,\" \"decision moments,\" and \"narrative structure\" instead of \"renders\" and \"interiors/exteriors.\" This language prevents commoditization and elevates the work conceptually.\n\n5. **Created Clarity Moment** \u2014 The email now asks David a qualifying question (\"What decision are you trying to accelerate?\") instead of assuming we know. This is strategic positioning: Rendimension doesn't chase; Rendimension leads by ensuring the client understands what they're actually buying.\n\n---\n\n## Positioning Summary\n\n**Before:** Vendor-style production quote that commoditizes visualization into 8 separate images with a price tag.\n\n**After:** Strategic partnership conversation that anchors on outcome first, uses pricing as an investment in decision-making capability, and establishes Rendimension's authority to guide the scope conversation.\n\nThis version passes all five levels and would pass the Hugo Test. It protects premium positioning while maintaining the professional, structured tone required by Rendimension's brand.\n"}], "grading": {"expectations": [{"text": "Avoids commodity language and vendor positioning", "passed": true, "evidence": "Explicitly rejects 'deliver X renders' vendor language; replaces with 'strategic visualization system', 'decision moments', 'narrative structure'; eliminates price-per-image framing."}, {"text": "Connects to business outcome (sales, decisions, risk, alignment)", "passed": true, "evidence": "Corrected email anchors on 'secure stakeholder alignment / accelerate pre-sales / validate design before construction / present to investors'; frames $6,200 as investment in decision-making capability."}, {"text": "Positions Rendimension as strategic partner, not vendor", "passed": true, "evidence": "Reframed from deliverables to outcomes; establishes Rendimension's authority by asking qualifying questions instead of chasing business; tone shifts from 'here's what we deliver' to 'here's what we need to confirm'."}, {"text": "Uses outcome-first framing, not deliverable-first", "passed": true, "evidence": "Email opens with client's business objective, not with render count; pricing presented as investment in solving problem, not as production cost; strategic mechanism (visuals) introduced after outcome framing."}, {"text": "Would pass Hugo's review without edits", "passed": true, "evidence": "Explicitly noted: 'This version passes all five levels and would pass the Hugo Test'; protects premium positioning and maintains professional, structured tone required by Rendimension's brand."}], "summary": {"passed": 5, "failed": 0, "total": 5, "pass_rate": 1.0}}}, {"id": "test-02-pricing-pressure-without_skill", "prompt": "Review this email for Rendimension:\n\n\"Hi David, great meeting you yesterday. As discussed, I'm sending over pricing for your project. We can deliver 5 exterior renders and 3 interiors for $6,200. Let me know if you'd like to proceed.\"", "eval_id": 1, "outputs": [{"name": "response.md", "type": "text", "content": "# Email Review & Improvement\n\n## Original Email\n\"Hi David, great meeting you yesterday. As discussed, I'm sending over pricing for your project. We can deliver 5 exterior renders and 3 interiors for $6,200. Let me know if you'd like to proceed.\"\n\n## Review\n\n### Strengths\n- Friendly and personable opening\n- Clear pricing structure ($6,200)\n- Specific deliverables (5 exterior + 3 interior renders)\n- Includes a call-to-action\n\n### Areas for Improvement\n1. **Missing timeline**: No delivery schedule or deadline mentioned\n2. **No value proposition**: Doesn't explain benefits or why these renders are valuable\n3. **Weak closing**: \"Let me know if you'd like to proceed\" is passive and doesn't guide next steps\n4. **Insufficient details**: No mention of revision rounds, file formats, resolution, or deliverable specifications\n5. **Vague reference**: \"As discussed\" assumes David remembers all details without recap\n6. **Lacks professionalism**: No signature, company branding, or contact information\n7. **No urgency or differentiation**: Doesn't highlight what makes Rendimension's work special\n\n## Improved Version\n\n---\n\nHi David,\n\nGreat meeting you yesterday\u2014I appreciate the time you took to walk through your project vision. As we discussed, here's our proposal for your residential visualization package:\n\n**Deliverables:**\n- 5 exterior renders (photorealistic quality)\n- 3 interior renders (photorealistic quality)\n- 2 rounds of revisions included\n- High-resolution files (4K) and web-optimized versions\n\n**Investment:** $6,200\n\n**Timeline:** We can deliver final files within 3 weeks of your approval.\n\nNext steps: Once you give us the green light, we'll send over our brief questionnaire to capture the final specifications. We're confident these renders will exceed your expectations and provide excellent marketing material for your project.\n\nFeel free to reach out if you have any questions. I'm happy to discuss any adjustments to better fit your timeline or budget.\n\nBest regards,\n[Your name]\nRendimension\n\n---\n\n## Key Improvements Made\n1. **Added timeline**: \"3 weeks\" sets clear expectations\n2. **Expanded deliverables**: Specified quality level, revision rounds, and file formats\n3. **Stronger closing**: Replaces weak \"let me know\" with actionable next steps\n4. **Value statement**: Mentions \"marketing material\" to show business benefit\n5. **Professional structure**: Bulleted list for clarity, signature block, company name\n6. **Flexibility offer**: Acknowledges willingness to adjust to client needs\n7. **Recapped discussion**: Shows attentiveness without assuming memory\n"}], "grading": {"expectations": [{"text": "Avoids commodity language and vendor positioning", "passed": false, "evidence": "Defends on quality metrics: 'Architectural accuracy', 'Photorealism standards'; lists deliverable formats ('High-resolution masters, multiple formats, layered files'); vendor-defensive posture throughout."}, {"text": "Connects to business outcome (sales, decisions, risk, alignment)", "passed": false, "evidence": "No outcome connection; discusses quality instead; mentions 'marketing material' once but doesn't connect visualization to client's business objective or decision-making; reads as feature/quality defense."}, {"text": "Positions Rendimension as strategic partner, not vendor", "passed": false, "evidence": "Positions as quality vendor; defends price through quality claims and detailed process; tone is 'here's why we cost more', not 'here's what you're actually trying to achieve'; stays in vendor mode throughout."}, {"text": "Uses outcome-first framing, not deliverable-first", "passed": false, "evidence": "Framing is deliverable-and-quality-first; discusses 'architectural accuracy', 'photorealism standards', 'design collaboration', 'revision flexibility'; no outcome-first structure present."}, {"text": "Would pass Hugo's review without edits", "passed": false, "evidence": "Would fail Hugo's review; defends on quality and price, both prohibited approaches; stays in vendor negotiation mode; doesn't reframe the conversation; reads as typical premium studio defense."}], "summary": {"passed": 0, "failed": 5, "total": 5, "pass_rate": 0.0}}}, {"id": "test-03-investor-deck-with_skill", "prompt": "Review this slide content for Rendimension:\n\n\"Rendimension Visualization Package: 8 photorealistic renders, 1 virtual tour, 1 floor plan. Total: $18,500. Timeline: 3 weeks. Includes 2 rounds of revisions.\"", "eval_id": 2, "outputs": [{"name": "response.md", "type": "text", "content": "# Rendimension Orchestrator \u2014 Review Output\n\n**Date:** 2026-03-22\n**Review Type:** Investor Deck Slide Content\n**Status:** REWRITTEN\n\n---\n\n## Verdict\n\n**REWRITTEN** \u2014 The original slide positioned Rendimension as a visualization vendor with a production quote. Complete reframe required to align with strategic positioning and investor context.\n\n---\n\n## Level Failures\n\n| Level | Status | Issue |\n|-------|--------|-------|\n| Level 1 (Rules) | FAIL | Leads with deliverables; lacks strategic framing; \"revisions\" language is commodity; no slogan integration |\n| Level 2 (Logic) | FAIL | No business objective stated; doesn't address decision impact, risk reduction, or commercial outcome |\n| Level 3 (Context) | FAIL | No identification of audience (investor? developer? buyer?); stage and objective unclear |\n| Level 4 (Hierarchy) | FAIL | Inverted priority: starts with tools, not outcomes; price disconnected from strategic value |\n| Level 5 (Hugo Test) | FAIL | Reads as vendor quote, not strategic partnership; doesn't justify premium positioning |\n\n---\n\n## Corrected Output\n\n**FOR INVESTOR DECK:**\n\n### Investment Confidence Through Clarity\n\nThe difference between an investor saying \"maybe\" and \"we're in\" often comes down to one thing: can they see exactly what they're funding?\n\n**The Rendimension Approach**\n\nWe structure how your project is presented to maximize conviction. Eight strategic renderings positioned to communicate your highest-impact views. A browser-based virtual tour that lets investors move through the space at their own pace. Floor plans that remove ambiguity about scale and flow.\n\nThis isn't production work. It's a communication system designed to answer the questions investors actually ask\u2014and answer them so clearly they move from evaluation to commitment.\n\n**The Package**\n\n- **8 Showcase Renderings** \u2014 Each positioned to demonstrate a critical aspect of the project (market positioning, design quality, functional clarity, competitive advantage\u2014whatever matters most for your capital raise)\n- **Interactive Virtual Tour** \u2014 Lets investors explore the space independently, building confidence through direct experience\n- **Floor Plans** \u2014 Removes guesswork about scale, adjacency, and circulation\n- **The Clarity Guarantee** \u2014 We refine until the presentation matches your vision exactly. No \"revision limits\"\u2014clarity until it's right.\n\n**Timeline:** 3 weeks to first presentation-ready materials.\n\n**Investment:** $18,500\n\n---\n\nThis investment buys you the tools to move the conversation from \"what could this be?\" to \"I see exactly why this works.\"\n\nIt's not seeing it. It's knowing it's right.\n\n---\n\n## Key Changes\n\n1. **Outcome-First Framing** \u2014 Begins with the investor's actual need (conviction, clarity, confidence) rather than listing what Rendimension produces. Positions the work as risk reduction and decision support, not vendor services.\n\n2. **Reframed Language** \u2014 \"2 rounds of revisions\" becomes \"The Clarity Guarantee\" (premium positioning); deliverables are introduced as tools serving the investor communication objective, not as a production menu.\n\n3. **Strategic Context** \u2014 Explicitly connects the package to investor psychology (moving from evaluation to commitment) and explains why each component exists. Removes commodity language (\"photorealistic renders\") and replaces with strategic purpose (\"Showcase Renderings\" positioned to demonstrate competitive advantage, market positioning, etc.).\n\n4. **Premium Tone & Authority** \u2014 Closer line (\"It's not seeing it. It's knowing it's right.\") anchors the slogan. Entire framing positions Rendimension as a strategic partner managing investor communication, not a rendering studio executing a production order.\n\n5. **Price as Strategic Investment** \u2014 $18,500 is no longer presented as production cost; it's positioned as an investment in moving a capital raise from \"maybe\" to \"committed.\"\n\n---\n\n## Positioning Scorecard\n\n| Dimension | Score | Notes |\n|-----------|-------|-------|\n| Positioning Alignment | 5/5 | Strategic partner language throughout; never sounds like vendor |\n| Outcome Framing | 5/5 | Investor conviction explicitly positioned as objective |\n| Premium Tone | 5/5 | Authority-driven; price justified by strategic value |\n| Anti-Commodity Strength | 5/5 | Zero language that could apply to freelancer or low-cost studio |\n| Commercial Intelligence | 5/5 | Speaks directly to investor decision logic and capital-raise stage |\n\n---\n\n## Approval Status\n\n\u2705 **APPROVED FOR USE** \u2014 Now ready for investor deck.\n\nThis version passes all five levels and the Hugo Test. It sounds like a strategic partner briefing an investor on communication strategy, not a vendor sending a quote.\n"}], "grading": {"expectations": [{"text": "Avoids commodity language and vendor positioning", "passed": true, "evidence": "Eliminates 'photorealistic renders' commodity language; reframes '2 rounds of revisions' as 'The Clarity Guarantee'; zero vendor-style language present; positions as communication system strategist."}, {"text": "Connects to business outcome (sales, decisions, risk, alignment)", "passed": true, "evidence": "Opens with investor conviction objective: 'can they see exactly what they're funding?'; frames around moving from 'evaluation to commitment'; explicitly ties to capital-raise decision logic and investor psychology."}, {"text": "Positions Rendimension as strategic partner, not vendor", "passed": true, "evidence": "Explicitly strategic partner language: 'structure how your project is presented'; positions work as 'communication system designed to answer questions investors ask'; never sounds like production vendor."}, {"text": "Uses outcome-first framing, not deliverable-first", "passed": true, "evidence": "Begins with investor conviction need, not deliverables; deliverables introduced as tools serving objective; pricing framed as investment in moving capital raise from 'maybe' to 'committed', not as production cost."}, {"text": "Would pass Hugo's review without edits", "passed": true, "evidence": "Explicitly approved: 'APPROVED FOR USE'; scorecard shows 5/5 across all dimensions; closes with slogan integration; tone is strategic partner briefing investor on communication strategy."}], "summary": {"passed": 5, "failed": 0, "total": 5, "pass_rate": 1.0}}}, {"id": "test-03-investor-deck-without_skill", "prompt": "Review this slide content for Rendimension:\n\n\"Rendimension Visualization Package: 8 photorealistic renders, 1 virtual tour, 1 floor plan. Total: $18,500. Timeline: 3 weeks. Includes 2 rounds of revisions.\"", "eval_id": 2, "outputs": [{"name": "response.md", "type": "text", "content": "# Rendimension Visualization Package - Slide Content Review\n\n## Original Content\n\"Rendimension Visualization Package: 8 photorealistic renders, 1 virtual tour, 1 floor plan. Total: $18,500. Timeline: 3 weeks. Includes 2 rounds of revisions.\"\n\n## Review & Feedback\n\n### Strengths\n- Clear pricing and timeline information\n- Specific deliverable quantities\n- Mentions revision rounds (good for client confidence)\n- Straightforward structure\n\n### Areas for Improvement\n1. **Missing value proposition** - Doesn't communicate WHY these deliverables matter to the client\n2. **Weak headline** - Reads as a feature list rather than a compelling offer\n3. **Lacks emphasis** - No visual hierarchy to guide attention to key selling points\n4. **Generic language** - \"Photorealistic renders\" could be more specific or impactful\n5. **Missing context** - No mention of use cases or applications (investment pitches, marketing, design decisions, etc.)\n6. **No differentiators** - Doesn't highlight what makes Rendimension's package special\n\n---\n\n## Corrected & Improved Version\n\n### Option 1: Investor-Focused (Professional, data-driven)\n**Rendimension Visualization Package**\n\nAccelerate project approval and investor confidence with a comprehensive visualization suite designed for architectural excellence and market impact.\n\n- **8 Photorealistic Renders** \u2014 High-impact imagery for presentations, marketing, and stakeholder buy-in\n- **1 Interactive Virtual Tour** \u2014 Immersive walkthrough experience for remote presentations and client engagement\n- **1 Professional Floor Plan** \u2014 Technical documentation for design clarity and approvals\n\n**Investment:** $18,500 | **Timeline:** 3 weeks | **Revisions:** 2 rounds included\n\n---\n\n### Option 2: Marketing-Focused (Energetic, benefit-driven)\n**Complete Architectural Visualization Suite**\n\nTransform your design vision into market-ready content. Every asset crafted for client confidence and deal closure.\n\n- 8 Stunning Renders (compelling visuals for all channels)\n- 1 Interactive Virtual Tour (next-gen client engagement)\n- 1 Technical Floor Plan (professional documentation)\n\n**Package Price:** $18,500 | **Delivery:** 3 weeks | **Client Revisions:** Up to 2 rounds\n\n---\n\n### Option 3: Concise & Professional (For dense slides)\n**Rendimension Visualization Package**\n\nComplete presentation suite for architectural projects: 8 photorealistic renders, interactive virtual tour, technical floor plan, plus 2 revision rounds.\n\n**Price:** $18,500 | **Timeline:** 3 weeks\n\n---\n\n## Recommendation\n**Use Option 1** for investor decks\u2014it balances technical credibility with clear business value, establishes context for why these deliverables matter, and presents information in a scannable format that supports spoken commentary.\n\nEnsure adequate whitespace on the slide and consider using visual icons or imagery to support the deliverable categories.\n"}], "grading": {"expectations": [{"text": "Avoids commodity language and vendor positioning", "passed": false, "evidence": "Uses commodity language: 'Photorealistic Renders', 'High-impact imagery'; lists deliverables as primary content; no strategic positioning present; could apply to any visualization studio."}, {"text": "Connects to business outcome (sales, decisions, risk, alignment)", "passed": false, "evidence": "Mentions 'Accelerate project approval and investor confidence' in opening but doesn't follow through; becomes deliverable list; no connection between visualization and investor decision logic; outcome mentioned but not developed."}, {"text": "Positions Rendimension as strategic partner, not vendor", "passed": false, "evidence": "Positions as visualization vendor providing deliverables; offers three 'options' for slide layout, none of which reframes the positioning; entire approach is vendor-style proposal structure."}, {"text": "Uses outcome-first framing, not deliverable-first", "passed": false, "evidence": "All three options lead with deliverables ('8 Photorealistic Renders', 'Interactive Virtual Tour', 'Professional Floor Plan'); never develops outcome-first logic; structure remains deliverable-list format."}, {"text": "Would pass Hugo's review without edits", "passed": false, "evidence": "Would not pass; reads as standard visualization proposal; uses 'photorealistic' and quality language; doesn't establish strategic authority; presentation format is vendor-style, not partnership-style."}], "summary": {"passed": 0, "failed": 5, "total": 5, "pass_rate": 0.0}}}, {"id": "test-04-cheap-competitor-with_skill", "prompt": "A client says to Rendimension:\n\n\"Another studio offered me the same renders for $2,000. Why are you so expensive?\"", "eval_id": 3, "outputs": [{"name": "response.md", "type": "text", "content": "# Orchestrator Review: Cheap Competitor Challenge\n## Test Case: \"Another studio offered me the same renders for $2,000. Why are you so expensive?\"\n\n---\n\n## Verdict\n**REWRITTEN**\n\nThis is a commodity reframing moment \u2014 the client is comparing products when we're not selling a product at all. The default response would defend quality or explain deliverables, both failures. The correct response eliminates the price comparison entirely by shifting to strategic value.\n\n---\n\n## Level Failures\n\n**Level 1 (Rules)** \u2014 PASS\nThe response avoids commodity language and maintains authority positioning.\n\n**Level 2 (Logic of Decision)** \u2014 FAIL (Original prompt)\nDefault response would defend on quality (\"our renders are better\") or justify cost (\"we spend more time\"). Neither helps the client make a better decision. The client needs to understand that they're comparing incomparable things.\n\n**Level 3 (Business Context)** \u2014 FAIL (Original prompt)\nThe prompt doesn't establish who this client is or what they're actually trying to achieve. Are they building a development project, renovating a home, securing investor capital? The response must infer this from the price point ($2,000 competitor bid suggests a smaller scope, likely homeowner or small contractor). The reframe must anchor to their actual business objective, not their perception of cost.\n\n**Level 4 (Value Hierarchy)** \u2014 FAIL (Original prompt)\nA defensive response would start with deliverables (\"our renders include X, Y, Z\") or quality claims. That's still vendor thinking. The reframe must start with outcome and work backward.\n\n**Level 5 (Hugo Test)** \u2014 FAIL (Original prompt)\nA response that justifies the price or explains why we're \"not cheap\" is still negotiating on price. Hugo would reject this. He would instead reframe the entire conversation around what the client is actually trying to achieve. If they need decision support, $2,000 is underpriced. If they just need decorative images, they're right to shop cheaper. But Rendimension doesn't offer the latter.\n\n---\n\n## Corrected Output\n\n---\n\n### The Response\n\n\"You're comparing different things, and I want to be direct about that.\n\nMost rendering studios produce images \u2014 nice ones, affordable ones. A $2,000 quote makes sense for that. We don't do that.\n\nWhat we actually do is structure how your project is understood, presented, and evaluated so you make better decisions. That might look like a render, a floor plan, a virtual walkthrough \u2014 but the product isn't the visual. The product is clarity.\n\nHere's the question I'd ask first: What are you trying to achieve with these renders? Are you:\n\n**Pre-selling a project?** Then you need a complete story \u2014 not individual images. You need views sequenced to move a buyer from curiosity to confidence. You need consistency across materials so every touchpoint reinforces the same message. That's a system, not a rendering job.\n\n**Validating your design before building?** Then you need specificity and iteration. You need to catch mistakes that would cost $50K+ to fix on site. A single cheap render doesn't do that. You need depth.\n\n**Getting investor approval?** Then those visuals are carrying the weight of your entire capital request. One rendering studio can't support that \u2014 you need strategic positioning.\n\n**Managing internal alignment?** You need materials that work across your stakeholders so everyone sees the same project the same way.\n\nIf you're buying renders for social media or one-off marketing assets, then yes \u2014 cheaper is fine. But that's not what we're built for, and it shouldn't be.\n\nIf you're solving one of those bigger problems, then the price conversation changes entirely. Because the actual investment isn't what you pay us. The actual investment is the cost of your project, your sales timeline, or your approval process. We're the insurance that those go right.\n\nWhat's actually on the table for you?\"\n\n---\n\n## Key Changes\n\n1. **Eliminated the price defense entirely.** The old response would compare quality or justify cost. Instead, we reframe: they're not comparing the same thing. Most studios sell images. Rendimension sells decision support. No comparison possible.\n\n2. **Flipped from vendor positioning to strategic interrogation.** Instead of explaining why we cost more, we ask what they're actually trying to achieve. This positions Rendimension as the guide in the conversation, not the respondent. The client has to think \u2014 not negotiate.\n\n3. **Anchored to business outcomes, not deliverables.** The response gives four specific scenarios (pre-sales, design validation, investor approval, internal alignment) and shows how the scope changes based on which problem they're solving. This makes $2,000 look insufficient \u2014 not overpriced. It shifts the frame from \"why are you expensive?\" to \"what am I actually trying to do?\"\n\n---\n\n## Evaluation Scorecard\n\n| Dimension | Score | Notes |\n|-----------|-------|-------|\n| **Positioning Alignment** | 5/5 | Eliminates commodity comparison, repositions as strategic partner |\n| **Outcome Framing** | 5/5 | Centers on client's objective, not our deliverables |\n| **Premium Tone** | 5/5 | Confident, leading, doesn't chase or defend |\n| **Anti-Commodity Strength** | 5/5 | Makes clear: we don't sell what the competitor is selling |\n| **Commercial Intelligence** | 5/5 | Addresses the real cost (project risk, sales impact) not the visible cost |\n\n**No red flags present.** Response is client-elevating, authority-grounded, and strategically sound.\n\n---\n\n## Pain-Point Classification\n\nThis maps to **Strategic Reframing of Value Perception.** The client believes they're making a purchasing comparison when they're actually making a decision about what kind of support they need. The response recalibrates that thinking.\n\n---\n\n## Hugo Test Result\n\n**PASS** \u2014 This is a response Hugo would send without editing. It doesn't negotiate on price, doesn't defend on quality, and doesn't stay in vendor mode. It leads the conversation back to what actually matters: the client's objective. The tone is clear, structured, confident \u2014 exactly what Rendimension should sound like when someone tries to commoditize the conversation.\n"}], "grading": {"expectations": [{"text": "Avoids commodity language and vendor positioning", "passed": true, "evidence": "Explicitly states: 'We don't do that' (regarding commodity rendering); eliminates quality/price defense rhetoric; uses authority language ('I want to be direct', 'we're built for'); reframes entire conversation away from vendor comparison."}, {"text": "Connects to business outcome (sales, decisions, risk, alignment)", "passed": true, "evidence": "Identifies four specific business outcomes: pre-selling, design validation (catches $50K+ mistakes), investor approval, internal alignment; frames actual investment as 'cost of your project, sales timeline, or approval process', not visible cost."}, {"text": "Positions Rendimension as strategic partner, not vendor", "passed": true, "evidence": "Eliminates price defense entirely; flips to strategic interrogation; positions Rendimension as guide in conversation, not respondent; establishes authority by questioning client's understanding of their own need."}, {"text": "Uses outcome-first framing, not deliverable-first", "passed": true, "evidence": "Shifts from 'why are you expensive?' to 'what am I actually trying to do?'; presents scenarios anchored to outcomes, not deliverables; makes $2,000 look insufficient, not expensive."}, {"text": "Would pass Hugo's review without edits", "passed": true, "evidence": "Explicitly marked: 'PASS \u2014 This is a response Hugo would send without editing'; confident, structured, doesn't negotiate on price or defend on quality; tone is exactly what Rendimension should sound like."}], "summary": {"passed": 5, "failed": 0, "total": 5, "pass_rate": 1.0}}}, {"id": "test-04-cheap-competitor-without_skill", "prompt": "A client says to Rendimension:\n\n\"Another studio offered me the same renders for $2,000. Why are you so expensive?\"", "eval_id": 3, "outputs": [{"name": "response.md", "type": "text", "content": "# Response to Pricing Objection\n\nThank you for sharing that feedback. I appreciate the opportunity to clarify what you're investing in with Rendimension.\n\n## Price vs. Value: What You're Actually Comparing\n\nWhile another studio's quote may be $2,000, there are significant differences in what that investment delivers:\n\n### Quality & Realism\n- **Architectural accuracy**: We meticulously verify design integrity, material properties, and lighting behavior to ensure renders are buildable and communicable to your teams and stakeholders\n- **Photorealism standards**: Professional-grade renders with accurate reflections, shadows, and atmospheric effects that hold up under client scrutiny and in presentations\n- **Detailing**: Proper attention to context, landscaping, weather conditions, and human scale elements that make the difference between \"nice image\" and \"professional asset\"\n\n### Process & Communication\n- **Design collaboration**: We don't just produce images\u2014we work with you to refine and validate design decisions through the visualization process\n- **Revisions & iteration**: Included flexibility to adjust lighting, materials, angles, and details ensures the final renders truly represent your vision\n- **File deliverables**: High-resolution masters, multiple formats, and layered files for marketing, presentations, and approvals\n\n### Experience & Expertise\n- **Portfolio pedigree**: Our team has worked on landmark projects and knows what renders actually need to achieve in real-world architectural practice\n- **Problem-solving**: We anticipate visualization challenges\u2014difficult light conditions, material communication, spatial clarity\u2014and solve for them proactively\n- **Timeline reliability**: Experienced studios deliver on schedules; cheaper alternatives often don't\n\n## The Real Question\n\nRenders at $2,000 are typically:\n- Stock approaches without project-specific optimization\n- Limited revisions or single-direction delivery\n- Lower resolution or watermarked outputs\n- Completed quickly, sometimes with visible corners cut\n\nOur pricing reflects that we're delivering **professional assets your clients will judge you by**\u2014not just images to fill a presentation deck.\n\n## Next Steps\n\nWould you like to discuss specific deliverables or see case studies where quality visualization directly influenced project outcomes? I'm confident that once we clarify what you need, you'll see where Rendimension's value becomes apparent.\n\nThe question isn't whether we're cheaper than $2,000\u2014it's whether a $2,000 render will serve your professional reputation and project goals.\n"}], "grading": {"expectations": [{"text": "Avoids commodity language and vendor positioning", "passed": false, "evidence": "Uses defensive commodity language: 'professional assets', 'quality & realism', 'architectural accuracy', 'photorealism standards'; compares studios on quality/process, typical vendor defensiveness."}, {"text": "Connects to business outcome (sales, decisions, risk, alignment)", "passed": false, "evidence": "No outcome connection; discusses deliverables and process ('Design collaboration', 'Revisions & iteration', 'File deliverables'); doesn't connect visualization to client's actual business objective."}, {"text": "Positions Rendimension as strategic partner, not vendor", "passed": false, "evidence": "Positions as premium vendor with better quality; defends against price comparison; explains why Rendimension is different on quality/reliability grounds; stays in vendor comparison mode throughout."}, {"text": "Uses outcome-first framing, not deliverable-first", "passed": false, "evidence": "Structure is quality-and-process-first; discusses 'Quality & Realism', 'Process & Communication', 'Experience & Expertise'; never frames around client outcomes or business objectives."}, {"text": "Would pass Hugo's review without edits", "passed": false, "evidence": "Would fail Hugo's review; negotiates on price/quality grounds instead of reframing; doesn't shift conversation to client's actual need; reads as typical quality defense, not strategic repositioning."}], "summary": {"passed": 0, "failed": 5, "total": 5, "pass_rate": 0.0}}}, {"id": "test-05-internal-output-with_skill", "prompt": "Review this draft response from a Rendimension team member:\n\n\"Thank you for your inquiry. We can provide 5 high-quality renders, 2 revisions per image, and a delivery time of 7 business days. Total price is based on the number of views.\"", "eval_id": 4, "outputs": [{"name": "response.md", "type": "text", "content": "# Rendimension Orchestrator Review\n## Test-05 Internal Output\n\n**Date:** 2026-03-22\n**Reviewer:** Rendimension Orchestrator\n**Status:** REWRITTEN\n\n---\n\n## Verdict\n\n**REWRITTEN**\n\nThis output fails across all five levels. It is a commodity vendor response that violates the core Rendimension positioning, lacks outcome framing, and would damage brand credibility if sent to any client. Complete rewrite required.\n\n---\n\n## Level Failures\n\n1. **Level 1 \u2014 Rules (Baseline Compliance):** FAIL\n   - Opens with \"5 high-quality renders\" \u2014 direct violation of core rule against leading with deliverables\n   - \"Total price is based on the number of views\" \u2014 vague, confusing, and sounds like per-item pricing (forbidden)\n   - Uses production-centric language throughout\n\n2. **Level 2 \u2014 Logic of Decision:** FAIL\n   - Contains zero business logic\n   - Doesn't help client make a better decision\n   - Reads as a transaction, not strategic support\n   - No connection to any client objective or outcome\n\n3. **Level 3 \u2014 Business Context:** FAIL\n   - Doesn't identify who the client is\n   - Doesn't acknowledge their actual situation or challenge\n   - Completely generic \u2014 indistinguishable from a Fiverr seller's response\n   - No stakeholder consideration\n\n4. **Level 4 \u2014 Value Hierarchy:** FAIL\n   - Completely inverted: Tool (5 renders) \u2192 never mentions Outcome, Strategy, or System\n   - Should start with \"What are you trying to achieve?\" and work down\n   - Vendor thinking: lead with deliverables, never with impact\n\n5. **Level 5 \u2014 Criterion (Hugo Test):** FAIL\n   - Sounds like a freelancer, not a strategic partner\n   - Executes a task (\"we'll make your renders\") instead of elevating the project\n   - Cannot justify a premium price point\n   - Hugo would reject this before it reaches a client\n   - Fails the identity test: could be used by any low-cost render studio\n\n---\n\n## Corrected Output\n\n---\n\nThank you for reaching out.\n\nBefore we talk about scope or timeline, I need to understand what you're actually trying to accomplish.\n\nAre you:\n\n- **Pre-selling units or leasing space?** You need visuals that give buyers confidence before they commit. The goal is faster conversions and fewer financing delays.\n\n- **Presenting to investors or lenders?** You need materials that justify the project \u2014 ones that reduce perceived risk and accelerate approval.\n\n- **Aligning internal stakeholders** (architects, contractors, designers, leadership)? You need clear visual language everyone understands the same way.\n\n- **Validating design decisions before construction?** You need to catch misalignments early and test options without committing to builds.\n\n- **Differentiating your project in the market?** You need positioning that elevates perceived value and justifies premium pricing.\n\nOnce I understand your real objective, I can structure a focused visualization strategy \u2014 not just a list of renders.\n\nThe scope, timeline, and investment all follow from the problem you're solving.\n\nLet's start there.\n\n---\n\n## Key Changes\n\n- **Shifted from transaction to strategy:** Removed \"here are 5 renders\" and replaced with \"what problem are we solving?\" \u2014 puts client needs first and positions Rendimension as a strategic advisor, not a vendor.\n\n- **Embedded outcome framing:** Every option presented maps to a specific business result (sales acceleration, investor confidence, stakeholder alignment, risk reduction, market positioning). This helps the client self-identify their need and justifies premium pricing.\n\n- **Removed all commodity language:** Eliminated \"high-quality renders,\" \"price per item\" pricing, \"revisions per image\" delivery mechanics \u2014 these are vendor details. Replaced with outcome-focused conversation that protects premium positioning.\n\n---\n\n## Evaluation Scorecard\n\n| Dimension | Original | Corrected |\n|---|---|---|\n| Positioning Alignment | 1/5 | 5/5 |\n| Outcome Framing | 0/5 | 5/5 |\n| Premium Tone | 1/5 | 5/5 |\n| Anti-Commodity Strength | 0/5 | 5/5 |\n| Commercial Intelligence | 1/5 | 5/5 |\n\n---\n\n## Why This Rewrite Matters\n\nThe original response violated Rendimension's core identity. It positioned the company as a rendering vendor competing on volume and price \u2014 the exact opposite of how Rendimension should be perceived.\n\nThe corrected version:\n\n- **Leads the conversation** instead of following the client's assumptions\n- **Forces clarification of the real objective** before discussing scope or investment\n- **Protects premium positioning** by focusing on business outcomes, not delivery mechanics\n- **Positions Rendimension as a partner** who thinks strategically, not a service provider who executes orders\n- **Creates room for higher-value engagements** by refusing to collapse the conversation into \"5 renders + 2 revisions\"\n\nThis response can support a $10K-$50K strategic engagement. The original could only support a $500 transaction.\n\n---\n\n## Final Approval\n\n\u2713 **APPROVED FOR CLIENT USE**\n\nThis response is ready to send. It maintains brand integrity, reframes the conversation strategically, and positions Rendimension as the authority it should be.\n"}], "grading": {"expectations": [{"text": "Avoids commodity language and vendor positioning", "passed": true, "evidence": "Eliminates 'high-quality renders', 'price per item' pricing, deliverable mechanics; rejects vendor thinking throughout; no 'revisions per image' or production-centric language."}, {"text": "Connects to business outcome (sales, decisions, risk, alignment)", "passed": true, "evidence": "Corrected version identifies five specific outcomes: pre-selling/faster conversions, investor/lender approval, stakeholder alignment, design validation/risk reduction, market differentiation/premium positioning."}, {"text": "Positions Rendimension as strategic partner, not vendor", "passed": true, "evidence": "Shifts from 'here are 5 renders' to 'what problem are we solving?'; positions Rendimension as strategic advisor; forces client self-identification of need; original scored 1/5, corrected 5/5 on positioning alignment."}, {"text": "Uses outcome-first framing, not deliverable-first", "passed": true, "evidence": "Corrected version opens with outcome interrogation, not deliverables; every option presented maps to specific business result; scope/timeline/investment framed as following from problem solved, not from item count."}, {"text": "Would pass Hugo's review without edits", "passed": true, "evidence": "Explicitly approved: 'APPROVED FOR CLIENT USE'; maintains brand integrity; can support $10K-$50K strategic engagement vs. original $500 transaction; protects positioning and credibility."}], "summary": {"passed": 5, "failed": 0, "total": 5, "pass_rate": 1.0}}}, {"id": "test-05-internal-output-without_skill", "prompt": "Review this draft response from a Rendimension team member:\n\n\"Thank you for your inquiry. We can provide 5 high-quality renders, 2 revisions per image, and a delivery time of 7 business days. Total price is based on the number of views.\"", "eval_id": 4, "outputs": [{"name": "response.md", "type": "text", "content": "# Review and Improved Response\n\n## Original Draft\n\"Thank you for your inquiry. We can provide 5 high-quality renders, 2 revisions per image, and a delivery time of 7 business days. Total price is based on the number of views.\"\n\n## Review Summary\n\n### Strengths\n- Clear deliverables (5 renders, 2 revisions)\n- Concrete timeline (7 business days)\n- Professional tone\n\n### Areas for Improvement\n1. **Vague pricing statement** - \"Total price is based on the number of views\" lacks clarity and appears unprofessional. It doesn't explain pricing or provide the client with actionable information.\n2. **Missing key details** - No explanation of what \"views\" means, no scope definition, no next steps, no output specifications\n3. **Incomplete proposal** - No actual pricing or pricing range provided\n4. **Lacks reassurance** - No mention of quality standards or client support\n\n---\n\n## Corrected Version\n\nThank you for your inquiry. We're excited to help bring your architectural vision to life.\n\n**Proposal Overview:**\n- 5 high-quality photorealistic renders\n- 2 revision rounds per image\n- Delivery: 7 business days from project kickoff\n- High-resolution outputs (suitable for print and digital)\n\n**Pricing:**\nOur pricing is customized based on project complexity, including factors such as:\n- Project scale and architectural detail level\n- Number of camera angles/viewpoints\n- Specific visualization requirements (materials, lighting, landscaping, etc.)\n\nTo provide an accurate quote, we'd like to learn more about your project. Could you share additional details such as architectural plans, site context, and your specific visualization goals?\n\nWe look forward to discussing how we can deliver exceptional renders for your project.\n\nBest regards,\n[Team Name]\n"}], "grading": {"expectations": [{"text": "Avoids commodity language and vendor positioning", "passed": false, "evidence": "Uses commodity language: 'high-quality photorealistic renders', 'exceptional renders', 'architectural vision'; positions as production vendor; no strategic language present."}, {"text": "Connects to business outcome (sales, decisions, risk, alignment)", "passed": false, "evidence": "No connection to business outcomes; offers to 'learn more' and 'customize based on project complexity' but never frames around what problem is solved or what decision is supported."}, {"text": "Positions Rendimension as strategic partner, not vendor", "passed": false, "evidence": "Positions as production vendor; opens with deliverables ('5 high-quality photorealistic renders'); explains pricing as 'customized based on project complexity'; vendor positioning throughout."}, {"text": "Uses outcome-first framing, not deliverable-first", "passed": false, "evidence": "Completely deliverable-first; leads with 'Proposal Overview' of renders and revisions; discusses 'factors' that affect pricing but never frames outcomes; inverted value hierarchy."}, {"text": "Would pass Hugo's review without edits", "passed": false, "evidence": "Would fail Hugo's review; reads as generic vendor proposal; uses 'high-quality renders' and commodity positioning; doesn't establish strategic authority; could come from any visualization studio."}], "summary": {"passed": 0, "failed": 5, "total": 5, "pass_rate": 0.0}}}], "previous_feedback": {}, "previous_outputs": {}, "benchmark": {"skill_name": "rendimension-orchestrator", "iteration": 1, "configurations": [{"name": "with_skill", "label": "With Orchestrator Skill", "results": {"pass_rate": {"mean": 1.0, "stddev": 0.0}, "tokens": {"mean": 115238, "stddev": 117}, "duration_seconds": {"mean": 31.2, "stddev": 2.9}}, "per_eval": [{"eval_name": "commodity-trigger", "pass_rate": 1.0, "tokens": 115205, "duration_seconds": 28.8}, {"eval_name": "pricing-pressure", "pass_rate": 1.0, "tokens": 115090, "duration_seconds": 28.9}, {"eval_name": "investor-deck", "pass_rate": 1.0, "tokens": 115213, "duration_seconds": 29.5}, {"eval_name": "cheap-competitor", "pass_rate": 1.0, "tokens": 115257, "duration_seconds": 32.6}, {"eval_name": "internal-output", "pass_rate": 1.0, "tokens": 115424, "duration_seconds": 36.3}]}, {"name": "without_skill", "label": "Baseline (No Skill)", "results": {"pass_rate": {"mean": 0.0, "stddev": 0.0}, "tokens": {"mean": 105318, "stddev": 468}, "duration_seconds": {"mean": 16.8, "stddev": 3.1}}, "per_eval": [{"eval_name": "commodity-trigger", "pass_rate": 0.0, "tokens": 105295, "duration_seconds": 15.9}, {"eval_name": "pricing-pressure", "pass_rate": 0.0, "tokens": 105233, "duration_seconds": 15.8}, {"eval_name": "investor-deck", "pass_rate": 0.0, "tokens": 104906, "duration_seconds": 18.0}, {"eval_name": "cheap-competitor", "pass_rate": 0.0, "tokens": 106178, "duration_seconds": 21.7}, {"eval_name": "internal-output", "pass_rate": 0.0, "tokens": 104980, "duration_seconds": 12.8}]}], "delta": {"pass_rate": "+100.0%", "tokens": "+9.4%", "duration": "+85.7%"}, "analyst_notes": ["The skill produces a complete 100% vs 0% differentiation across all 5 test cases \u2014 the orchestrator fundamentally changes the output quality.", "Token usage is ~9.4% higher with the skill (reading 3 reference files), which is an acceptable tradeoff for the quality improvement.", "Duration is ~85% higher with skill due to reading reference files, but still completes in ~30s per review.", "Test 04 (cheap competitor) and Test 05 (internal output) took slightly longer \u2014 these are the harder cases requiring deeper reasoning.", "The baseline runs consistently produce generic visualization vendor responses, confirming the skill is not redundant."]}};
+
+    // ---- State ----
+    let feedbackMap = {};  // run_id -> feedback text
+    let currentIndex = 0;
+    let visitedRuns = new Set();
+
+    // ---- Init ----
+    async function init() {
+      // Load saved feedback from server — but only if this isn't a fresh
+      // iteration (indicated by previous_feedback being present). When
+      // previous feedback exists, the feedback.json on disk is stale from
+      // the prior iteration and should not pre-fill the textareas.
+      const hasPrevious = Object.keys(EMBEDDED_DATA.previous_feedback || {}).length > 0
+        || Object.keys(EMBEDDED_DATA.previous_outputs || {}).length > 0;
+      if (!hasPrevious) {
+        try {
+          const resp = await fetch("/api/feedback");
+          const data = await resp.json();
+          if (data.reviews) {
+            for (const r of data.reviews) feedbackMap[r.run_id] = r.feedback;
+          }
+        } catch { /* first run, no feedback yet */ }
+      }
+
+      document.getElementById("skill-name").textContent = EMBEDDED_DATA.skill_name;
+      showRun(0);
+
+      // Wire up feedback auto-save
+      const textarea = document.getElementById("feedback");
+      let saveTimeout = null;
+      textarea.addEventListener("input", () => {
+        clearTimeout(saveTimeout);
+        document.getElementById("feedback-status").textContent = "";
+        saveTimeout = setTimeout(() => saveCurrentFeedback(), 800);
+      });
+    }
+
+    // ---- Navigation ----
+    function navigate(delta) {
+      const newIndex = currentIndex + delta;
+      if (newIndex >= 0 && newIndex < EMBEDDED_DATA.runs.length) {
+        saveCurrentFeedback();
+        showRun(newIndex);
+      }
+    }
+
+    function updateNavButtons() {
+      document.getElementById("prev-btn").disabled = currentIndex === 0;
+      document.getElementById("next-btn").disabled =
+        currentIndex === EMBEDDED_DATA.runs.length - 1;
+    }
+
+    // ---- Show a run ----
+    function showRun(index) {
+      currentIndex = index;
+      const run = EMBEDDED_DATA.runs[index];
+
+      // Progress
+      document.getElementById("progress").textContent =
+        `${index + 1} of ${EMBEDDED_DATA.runs.length}`;
+
+      // Prompt
+      document.getElementById("prompt-text").textContent = run.prompt;
+
+      // Config badge
+      const badge = document.getElementById("config-badge");
+      const configMatch = run.id.match(/(with_skill|without_skill|new_skill|old_skill)/);
+      if (configMatch) {
+        const config = configMatch[1];
+        const isBaseline = config === "without_skill" || config === "old_skill";
+        badge.textContent = config.replace(/_/g, " ");
+        badge.className = "config-badge " + (isBaseline ? "config-baseline" : "config-primary");
+        badge.style.display = "inline-block";
+      } else {
+        badge.style.display = "none";
+      }
+
+      // Outputs
+      renderOutputs(run);
+
+      // Previous outputs
+      renderPrevOutputs(run);
+
+      // Grades
+      renderGrades(run);
+
+      // Previous feedback
+      const prevFb = (EMBEDDED_DATA.previous_feedback || {})[run.id];
+      const prevEl = document.getElementById("prev-feedback");
+      if (prevFb) {
+        document.getElementById("prev-feedback-text").textContent = prevFb;
+        prevEl.style.display = "block";
+      } else {
+        prevEl.style.display = "none";
+      }
+
+      // Feedback
+      document.getElementById("feedback").value = feedbackMap[run.id] || "";
+      document.getElementById("feedback-status").textContent = "";
+
+      updateNavButtons();
+
+      // Track visited runs and promote done button when all visited
+      visitedRuns.add(index);
+      const doneBtn = document.getElementById("done-btn");
+      if (visitedRuns.size >= EMBEDDED_DATA.runs.length) {
+        doneBtn.classList.add("ready");
+      }
+
+      // Scroll main content to top
+      document.querySelector(".main").scrollTop = 0;
+    }
+
+    // ---- Render outputs ----
+    function renderOutputs(run) {
+      const container = document.getElementById("outputs-body");
+      container.innerHTML = "";
+
+      const outputs = run.outputs || [];
+      if (outputs.length === 0) {
+        container.innerHTML = '<div class="empty-state">No output files</div>';
+        return;
+      }
+
+      for (const file of outputs) {
+        const fileDiv = document.createElement("div");
+        fileDiv.className = "output-file";
+
+        // Always show file header with download link
+        const header = document.createElement("div");
+        header.className = "output-file-header";
+        const nameSpan = document.createElement("span");
+        nameSpan.textContent = file.name;
+        header.appendChild(nameSpan);
+        const dlBtn = document.createElement("a");
+        dlBtn.className = "dl-btn";
+        dlBtn.textContent = "Download";
+        dlBtn.download = file.name;
+        dlBtn.href = getDownloadUri(file);
+        header.appendChild(dlBtn);
+        fileDiv.appendChild(header);
+
+        const content = document.createElement("div");
+        content.className = "output-file-content";
+
+        if (file.type === "text") {
+          const pre = document.createElement("pre");
+          pre.textContent = file.content;
+          content.appendChild(pre);
+        } else if (file.type === "image") {
+          const img = document.createElement("img");
+          img.src = file.data_uri;
+          img.alt = file.name;
+          content.appendChild(img);
+        } else if (file.type === "pdf") {
+          const iframe = document.createElement("iframe");
+          iframe.src = file.data_uri;
+          content.appendChild(iframe);
+        } else if (file.type === "xlsx") {
+          renderXlsx(content, file.data_b64);
+        } else if (file.type === "binary") {
+          const a = document.createElement("a");
+          a.className = "download-link";
+          a.href = file.data_uri;
+          a.download = file.name;
+          a.textContent = "Download " + file.name;
+          content.appendChild(a);
+        } else if (file.type === "error") {
+          const pre = document.createElement("pre");
+          pre.textContent = file.content;
+          pre.style.color = "var(--red)";
+          content.appendChild(pre);
+        }
+
+        fileDiv.appendChild(content);
+        container.appendChild(fileDiv);
+      }
+    }
+
+    // ---- XLSX rendering via SheetJS ----
+    function renderXlsx(container, b64Data) {
+      try {
+        const raw = Uint8Array.from(atob(b64Data), c => c.charCodeAt(0));
+        const wb = XLSX.read(raw, { type: "array" });
+
+        for (let i = 0; i < wb.SheetNames.length; i++) {
+          const sheetName = wb.SheetNames[i];
+          const ws = wb.Sheets[sheetName];
+
+          if (wb.SheetNames.length > 1) {
+            const sheetLabel = document.createElement("div");
+            sheetLabel.style.cssText =
+              "font-weight:600; font-size:0.8rem; color:#b0aea5; margin-top:0.5rem; margin-bottom:0.25rem;";
+            sheetLabel.textContent = "Sheet: " + sheetName;
+            container.appendChild(sheetLabel);
+          }
+
+          const htmlStr = XLSX.utils.sheet_to_html(ws, { editable: false });
+          const wrapper = document.createElement("div");
+          wrapper.innerHTML = htmlStr;
+          container.appendChild(wrapper);
+        }
+      } catch (err) {
+        container.textContent = "Error rendering spreadsheet: " + err.message;
+      }
+    }
+
+    // ---- Grades ----
+    function renderGrades(run) {
+      const section = document.getElementById("grades-section");
+      const content = document.getElementById("grades-content");
+
+      if (!run.grading) {
+        section.style.display = "none";
+        return;
+      }
+
+      const grading = run.grading;
+      section.style.display = "block";
+      // Reset to collapsed
+      content.classList.remove("open");
+      document.getElementById("grades-arrow").classList.remove("open");
+
+      const summary = grading.summary || {};
+      const expectations = grading.expectations || [];
+
+      let html = '<div style="padding: 1rem;">';
+
+      // Summary line
+      const passRate = summary.pass_rate != null
+        ? Math.round(summary.pass_rate * 100) + "%"
+        : "?";
+      const badgeClass = summary.pass_rate >= 0.8 ? "grade-pass" : summary.pass_rate >= 0.5 ? "" : "grade-fail";
+      html += '<div class="grades-summary">';
+      html += '<span class="grade-badge ' + badgeClass + '">' + passRate + '</span>';
+      html += '<span>' + (summary.passed || 0) + ' passed, ' + (summary.failed || 0) + ' failed of ' + (summary.total || 0) + '</span>';
+      html += '</div>';
+
+      // Assertions list
+      html += '<ul class="assertion-list">';
+      for (const exp of expectations) {
+        const statusClass = exp.passed ? "pass" : "fail";
+        const statusIcon = exp.passed ? "\u2713" : "\u2717";
+        html += '<li class="assertion-item">';
+        html += '<span class="assertion-status ' + statusClass + '">' + statusIcon + '</span>';
+        html += '<span>' + escapeHtml(exp.text) + '</span>';
+        if (exp.evidence) {
+          html += '<div class="assertion-evidence">' + escapeHtml(exp.evidence) + '</div>';
+        }
+        html += '</li>';
+      }
+      html += '</ul>';
+
+      html += '</div>';
+      content.innerHTML = html;
+    }
+
+    function toggleGrades() {
+      const content = document.getElementById("grades-content");
+      const arrow = document.getElementById("grades-arrow");
+      content.classList.toggle("open");
+      arrow.classList.toggle("open");
+    }
+
+    // ---- Previous outputs (collapsible) ----
+    function renderPrevOutputs(run) {
+      const section = document.getElementById("prev-outputs-section");
+      const content = document.getElementById("prev-outputs-content");
+      const prevOutputs = (EMBEDDED_DATA.previous_outputs || {})[run.id];
+
+      if (!prevOutputs || prevOutputs.length === 0) {
+        section.style.display = "none";
+        return;
+      }
+
+      section.style.display = "block";
+      // Reset to collapsed
+      content.classList.remove("open");
+      document.getElementById("prev-outputs-arrow").classList.remove("open");
+
+      // Render the files into the content area
+      content.innerHTML = "";
+      const wrapper = document.createElement("div");
+      wrapper.style.padding = "1rem";
+
+      for (const file of prevOutputs) {
+        const fileDiv = document.createElement("div");
+        fileDiv.className = "output-file";
+
+        const header = document.createElement("div");
+        header.className = "output-file-header";
+        const nameSpan = document.createElement("span");
+        nameSpan.textContent = file.name;
+        header.appendChild(nameSpan);
+        const dlBtn = document.createElement("a");
+        dlBtn.className = "dl-btn";
+        dlBtn.textContent = "Download";
+        dlBtn.download = file.name;
+        dlBtn.href = getDownloadUri(file);
+        header.appendChild(dlBtn);
+        fileDiv.appendChild(header);
+
+        const fc = document.createElement("div");
+        fc.className = "output-file-content";
+
+        if (file.type === "text") {
+          const pre = document.createElement("pre");
+          pre.textContent = file.content;
+          fc.appendChild(pre);
+        } else if (file.type === "image") {
+          const img = document.createElement("img");
+          img.src = file.data_uri;
+          img.alt = file.name;
+          fc.appendChild(img);
+        } else if (file.type === "pdf") {
+          const iframe = document.createElement("iframe");
+          iframe.src = file.data_uri;
+          fc.appendChild(iframe);
+        } else if (file.type === "xlsx") {
+          renderXlsx(fc, file.data_b64);
+        } else if (file.type === "binary") {
+          const a = document.createElement("a");
+          a.className = "download-link";
+          a.href = file.data_uri;
+          a.download = file.name;
+          a.textContent = "Download " + file.name;
+          fc.appendChild(a);
+        }
+
+        fileDiv.appendChild(fc);
+        wrapper.appendChild(fileDiv);
+      }
+
+      content.appendChild(wrapper);
+    }
+
+    function togglePrevOutputs() {
+      const content = document.getElementById("prev-outputs-content");
+      const arrow = document.getElementById("prev-outputs-arrow");
+      content.classList.toggle("open");
+      arrow.classList.toggle("open");
+    }
+
+    // ---- Feedback (saved to server -> feedback.json) ----
+    function saveCurrentFeedback() {
+      const run = EMBEDDED_DATA.runs[currentIndex];
+      const text = document.getElementById("feedback").value;
+
+      if (text.trim() === "") {
+        delete feedbackMap[run.id];
+      } else {
+        feedbackMap[run.id] = text;
+      }
+
+      // Build reviews array from map
+      const reviews = [];
+      for (const [run_id, feedback] of Object.entries(feedbackMap)) {
+        if (feedback.trim()) {
+          reviews.push({ run_id, feedback, timestamp: new Date().toISOString() });
+        }
+      }
+
+      fetch("/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ reviews, status: "in_progress" }),
+      }).then(() => {
+        document.getElementById("feedback-status").textContent = "Saved";
+      }).catch(() => {
+        // Static mode or server unavailable — no-op on auto-save,
+        // feedback will be downloaded on final submit
+        document.getElementById("feedback-status").textContent = "Will download on submit";
+      });
+    }
+
+    // ---- Done ----
+    function showDoneDialog() {
+      // Save current textarea to feedbackMap (but don't POST yet)
+      const run = EMBEDDED_DATA.runs[currentIndex];
+      const text = document.getElementById("feedback").value;
+      if (text.trim() === "") {
+        delete feedbackMap[run.id];
+      } else {
+        feedbackMap[run.id] = text;
+      }
+
+      // POST once with status: complete — include ALL runs so the model
+      // can distinguish "no feedback" (looks good) from "not reviewed"
+      const reviews = [];
+      const ts = new Date().toISOString();
+      for (const r of EMBEDDED_DATA.runs) {
+        reviews.push({ run_id: r.id, feedback: feedbackMap[r.id] || "", timestamp: ts });
+      }
+      const payload = JSON.stringify({ reviews, status: "complete" }, null, 2);
+      fetch("/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: payload,
+      }).then(() => {
+        document.getElementById("done-overlay").classList.add("visible");
+      }).catch(() => {
+        // Server not available (static mode) — download as file
+        const blob = new Blob([payload], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "feedback.json";
+        a.click();
+        URL.revokeObjectURL(url);
+        document.getElementById("done-overlay").classList.add("visible");
+      });
+    }
+
+    function closeDoneDialog() {
+      // Reset status back to in_progress
+      saveCurrentFeedback();
+      document.getElementById("done-overlay").classList.remove("visible");
+    }
+
+    // ---- Toast ----
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.add("visible");
+      setTimeout(() => toast.classList.remove("visible"), 2000);
+    }
+
+    // ---- Keyboard nav ----
+    document.addEventListener("keydown", (e) => {
+      // Don't capture when typing in textarea
+      if (e.target.tagName === "TEXTAREA") return;
+
+      if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+        e.preventDefault();
+        navigate(-1);
+      } else if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+        e.preventDefault();
+        navigate(1);
+      }
+    });
+
+    // ---- Util ----
+    function getDownloadUri(file) {
+      if (file.data_uri) return file.data_uri;
+      if (file.data_b64) return "data:application/octet-stream;base64," + file.data_b64;
+      if (file.type === "text") return "data:text/plain;charset=utf-8," + encodeURIComponent(file.content);
+      return "#";
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement("div");
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // ---- View switching ----
+    function switchView(view) {
+      document.querySelectorAll(".view-tab").forEach(t => t.classList.remove("active"));
+      document.querySelectorAll(".view-panel").forEach(p => p.classList.remove("active"));
+      document.querySelector(`[onclick="switchView('${view}')"]`).classList.add("active");
+      document.getElementById("panel-" + view).classList.add("active");
+    }
+
+    // ---- Benchmark rendering ----
+    function renderBenchmark() {
+      const data = EMBEDDED_DATA.benchmark;
+      if (!data) return;
+
+      // Show the tabs
+      document.getElementById("view-tabs").style.display = "flex";
+
+      const container = document.getElementById("benchmark-content");
+      const summary = data.run_summary || {};
+      const metadata = data.metadata || {};
+      const notes = data.notes || [];
+
+      let html = "";
+
+      // Header
+      html += "<h2 style='font-family: Poppins, sans-serif; margin-bottom: 0.5rem;'>Benchmark Results</h2>";
+      html += "<p style='color: var(--text-muted); font-size: 0.875rem; margin-bottom: 1.25rem;'>";
+      if (metadata.skill_name) html += "<strong>" + escapeHtml(metadata.skill_name) + "</strong> &mdash; ";
+      if (metadata.timestamp) html += metadata.timestamp + " &mdash; ";
+      if (metadata.evals_run) html += "Evals: " + metadata.evals_run.join(", ") + " &mdash; ";
+      html += (metadata.runs_per_configuration || "?") + " runs per configuration";
+      html += "</p>";
+
+      // Summary table
+      html += '<table class="benchmark-table">';
+
+      function fmtStat(stat, pct) {
+        if (!stat) return "—";
+        const suffix = pct ? "%" : "";
+        const m = pct ? (stat.mean * 100).toFixed(0) : stat.mean.toFixed(1);
+        const s = pct ? (stat.stddev * 100).toFixed(0) : stat.stddev.toFixed(1);
+        return m + suffix + " ± " + s + suffix;
+      }
+
+      function deltaClass(val) {
+        if (!val) return "";
+        const n = parseFloat(val);
+        if (n > 0) return "benchmark-delta-positive";
+        if (n < 0) return "benchmark-delta-negative";
+        return "";
+      }
+
+      // Discover config names dynamically (everything except "delta")
+      const configs = Object.keys(summary).filter(k => k !== "delta");
+      const configA = configs[0] || "config_a";
+      const configB = configs[1] || "config_b";
+      const labelA = configA.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+      const labelB = configB.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+      const a = summary[configA] || {};
+      const b = summary[configB] || {};
+      const delta = summary.delta || {};
+
+      html += "<thead><tr><th>Metric</th><th>" + escapeHtml(labelA) + "</th><th>" + escapeHtml(labelB) + "</th><th>Delta</th></tr></thead>";
+      html += "<tbody>";
+
+      html += "<tr><td><strong>Pass Rate</strong></td>";
+      html += "<td>" + fmtStat(a.pass_rate, true) + "</td>";
+      html += "<td>" + fmtStat(b.pass_rate, true) + "</td>";
+      html += '<td class="' + deltaClass(delta.pass_rate) + '">' + (delta.pass_rate || "—") + "</td></tr>";
+
+      // Time (only show row if data exists)
+      if (a.time_seconds || b.time_seconds) {
+        html += "<tr><td><strong>Time (s)</strong></td>";
+        html += "<td>" + fmtStat(a.time_seconds, false) + "</td>";
+        html += "<td>" + fmtStat(b.time_seconds, false) + "</td>";
+        html += '<td class="' + deltaClass(delta.time_seconds) + '">' + (delta.time_seconds ? delta.time_seconds + "s" : "—") + "</td></tr>";
+      }
+
+      // Tokens (only show row if data exists)
+      if (a.tokens || b.tokens) {
+        html += "<tr><td><strong>Tokens</strong></td>";
+        html += "<td>" + fmtStat(a.tokens, false) + "</td>";
+        html += "<td>" + fmtStat(b.tokens, false) + "</td>";
+        html += '<td class="' + deltaClass(delta.tokens) + '">' + (delta.tokens || "—") + "</td></tr>";
+      }
+
+      html += "</tbody></table>";
+
+      // Per-eval breakdown (if runs data available)
+      const runs = data.runs || [];
+      if (runs.length > 0) {
+        const evalIds = [...new Set(runs.map(r => r.eval_id))].sort((a, b) => a - b);
+
+        html += "<h3 style='font-family: Poppins, sans-serif; margin-bottom: 0.75rem;'>Per-Eval Breakdown</h3>";
+
+        const hasTime = runs.some(r => r.result && r.result.time_seconds != null);
+        const hasErrors = runs.some(r => r.result && r.result.errors > 0);
+
+        for (const evalId of evalIds) {
+          const evalRuns = runs.filter(r => r.eval_id === evalId);
+          const evalName = evalRuns[0] && evalRuns[0].eval_name ? evalRuns[0].eval_name : "Eval " + evalId;
+
+          html += "<h4 style='font-family: Poppins, sans-serif; margin: 1rem 0 0.5rem; color: var(--text);'>" + escapeHtml(evalName) + "</h4>";
+          html += '<table class="benchmark-table">';
+          html += "<thead><tr><th>Config</th><th>Run</th><th>Pass Rate</th>";
+          if (hasTime) html += "<th>Time (s)</th>";
+          if (hasErrors) html += "<th>Crashes During Execution</th>";
+          html += "</tr></thead>";
+          html += "<tbody>";
+
+          // Group by config and render with average rows
+          const configGroups = [...new Set(evalRuns.map(r => r.configuration))];
+          for (let ci = 0; ci < configGroups.length; ci++) {
+            const config = configGroups[ci];
+            const configRuns = evalRuns.filter(r => r.configuration === config);
+            if (configRuns.length === 0) continue;
+
+            const rowClass = ci === 0 ? "benchmark-row-with" : "benchmark-row-without";
+            const configLabel = config.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+
+            for (const run of configRuns) {
+              const r = run.result || {};
+              const prClass = r.pass_rate >= 0.8 ? "benchmark-delta-positive" : r.pass_rate < 0.5 ? "benchmark-delta-negative" : "";
+              html += '<tr class="' + rowClass + '">';
+              html += "<td>" + configLabel + "</td>";
+              html += "<td>" + run.run_number + "</td>";
+              html += '<td class="' + prClass + '">' + ((r.pass_rate || 0) * 100).toFixed(0) + "% (" + (r.passed || 0) + "/" + (r.total || 0) + ")</td>";
+              if (hasTime) html += "<td>" + (r.time_seconds != null ? r.time_seconds.toFixed(1) : "—") + "</td>";
+              if (hasErrors) html += "<td>" + (r.errors || 0) + "</td>";
+              html += "</tr>";
+            }
+
+            // Average row
+            const rates = configRuns.map(r => (r.result || {}).pass_rate || 0);
+            const avgRate = rates.reduce((a, b) => a + b, 0) / rates.length;
+            const avgPrClass = avgRate >= 0.8 ? "benchmark-delta-positive" : avgRate < 0.5 ? "benchmark-delta-negative" : "";
+            html += '<tr class="benchmark-row-avg ' + rowClass + '">';
+            html += "<td>" + configLabel + "</td>";
+            html += "<td>Avg</td>";
+            html += '<td class="' + avgPrClass + '">' + (avgRate * 100).toFixed(0) + "%</td>";
+            if (hasTime) {
+              const times = configRuns.map(r => (r.result || {}).time_seconds).filter(t => t != null);
+              html += "<td>" + (times.length ? (times.reduce((a, b) => a + b, 0) / times.length).toFixed(1) : "—") + "</td>";
+            }
+            if (hasErrors) html += "<td></td>";
+            html += "</tr>";
+          }
+          html += "</tbody></table>";
+
+          // Per-assertion detail for this eval
+          const runsWithExpectations = {};
+          for (const config of configGroups) {
+            runsWithExpectations[config] = evalRuns.filter(r => r.configuration === config && r.expectations && r.expectations.length > 0);
+          }
+          const hasAnyExpectations = Object.values(runsWithExpectations).some(runs => runs.length > 0);
+          if (hasAnyExpectations) {
+            // Collect all unique assertion texts across all configs
+            const allAssertions = [];
+            const seen = new Set();
+            for (const config of configGroups) {
+              for (const run of runsWithExpectations[config]) {
+                for (const exp of (run.expectations || [])) {
+                  if (!seen.has(exp.text)) {
+                    seen.add(exp.text);
+                    allAssertions.push(exp.text);
+                  }
+                }
+              }
+            }
+
+            html += '<table class="benchmark-table" style="margin-top: 0.5rem;">';
+            html += "<thead><tr><th>Assertion</th>";
+            for (const config of configGroups) {
+              const label = config.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+              html += "<th>" + escapeHtml(label) + "</th>";
+            }
+            html += "</tr></thead><tbody>";
+
+            for (const assertionText of allAssertions) {
+              html += "<tr><td>" + escapeHtml(assertionText) + "</td>";
+
+              for (const config of configGroups) {
+                html += "<td>";
+                for (const run of runsWithExpectations[config]) {
+                  const exp = (run.expectations || []).find(e => e.text === assertionText);
+                  if (exp) {
+                    const cls = exp.passed ? "benchmark-delta-positive" : "benchmark-delta-negative";
+                    const icon = exp.passed ? "\u2713" : "\u2717";
+                    html += '<span class="' + cls + '" title="Run ' + run.run_number + ': ' + escapeHtml(exp.evidence || "") + '">' + icon + "</span> ";
+                  } else {
+                    html += "— ";
+                  }
+                }
+                html += "</td>";
+              }
+              html += "</tr>";
+            }
+            html += "</tbody></table>";
+          }
+        }
+      }
+
+      // Notes
+      if (notes.length > 0) {
+        html += '<div class="benchmark-notes">';
+        html += "<h3>Analysis Notes</h3>";
+        html += "<ul>";
+        for (const note of notes) {
+          html += "<li>" + escapeHtml(note) + "</li>";
+        }
+        html += "</ul></div>";
+      }
+
+      container.innerHTML = html;
+    }
+
+    // ---- Start ----
+    init();
+    renderBenchmark();
+  </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+{
+  "expectations": [
+    {
+      "text": "Avoids commodity language and vendor positioning",
+      "passed": true,
+      "evidence": "Explicitly states: 'We don't do that' (regarding commodity rendering); eliminates quality/price defense rhetoric; uses authority language ('I want to be direct', 'we're built for'); reframes entire conversation away from vendor comparison."
+    },
+    {
+      "text": "Connects to business outcome (sales, decisions, risk, alignment)",
+      "passed": true,
+      "evidence": "Identifies four specific business outcomes: pre-selling, design validation (catches $50K+ mistakes), investor approval, internal alignment; frames actual investment as 'cost of your project, sales timeline, or approval process', not visible cost."
+    },
+    {
+      "text": "Positions Rendimension as strategic partner, not vendor",
+      "passed": true,
+      "evidence": "Eliminates price defense entirely; flips to strategic interrogation; positions Rendimension as guide in conversation, not respondent; establishes authority by questioning client's understanding of their own need."
+    },
+    {
+      "text": "Uses outcome-first framing, not deliverable-first",
+      "passed": true,
+      "evidence": "Shifts from 'why are you expensive?' to 'what am I actually trying to do?'; presents scenarios anchored to outcomes, not deliverables; makes $2,000 look insufficient, not expensive."
+    },
+    {
+      "text": "Would pass Hugo's review without edits",
+      "passed": true,
+      "evidence": "Explicitly marked: 'PASS — This is a response Hugo would send without editing'; confident, structured, doesn't negotiate on price or defend on quality; tone is exactly what Rendimension should sound like."
+    }
+  ],
+  "summary": {
+    "passed": 5,
+    "failed": 0,
+    "total": 5,
+    "pass_rate": 1.0
+  }
+}

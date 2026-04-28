@@ -1,0 +1,175 @@
+RENDIMENSION EXPRESS ESTIMATOR — FULL FLOW WIREFRAME
+quotes.rendimension.com
+============================================================
+
+GLOBAL ELEMENTS (every screen):
+- Progress bar at top: Step 1 of 5 (dots or bar)
+- Back button: top left, always visible
+- Rendimension logo: top left or center
+- Mobile-first layout
+
+============================================================
+SCREEN 0 — HERO / ENTRY
+============================================================
+Headline: "See your project before it's built."
+Subheadline: "Get an instant estimate for your visualization, 
+VR experience, or design project in minutes."
+Disclaimer (small): "Estimates are provided in real time. 
+Final pricing is confirmed after project review."
+CTA Button: [Start My Estimate →]
+No form fields. No distractions.
+
+============================================================
+SCREEN 1 — WHAT DO YOU WANT TO ACHIEVE? (Goal)
+============================================================
+Single question. 6 cards in 2-column grid. Single select.
+Auto-advance on selection.
+
+Cards:
+1. "See how my project will look before building"
+2. "Impress a client, investor, or partner"
+3. "Sell or pre-sell a development"
+4. "Avoid costly mistakes in a renovation"
+5. "Get images for HOA or permit approval"
+6. "Create a professional online presence"
+
+============================================================
+SCREEN 2 — WHAT TYPE OF PROJECT? (Project Type)
+============================================================
+Single question. 7 cards. Single select. Auto-advance.
+
+Cards:
+1. Residential — Single Family Home
+2. Residential — Multi-Family / Condo
+3. Commercial — Office / Retail
+4. Commercial — Hospitality / Hotel
+5. Mixed-Use Development
+6. Interior Design Project
+7. Outdoor / Landscape
+
+============================================================
+SCREEN 3 — BUILD YOUR PACKAGE (Services)
+============================================================
+4 collapsible sections. Quote Summary panel floats right 
+(desktop) or sticks bottom (mobile). Updates in real time.
+
+--- SECTION A: VISUALIZATIONS ---
+Each service = checkbox to activate + quantity slider
+
+[ ] Essential Rendering — $499/image
+    Slider: 1–20 | Subtotal: $X
+
+[ ] Premium Rendering — $750/image
+    Slider: 1–20 | Subtotal: $X
+
+[ ] Signature Rendering — $1,200/image
+    Slider: 1–10 | Subtotal: $X
+
+[ ] Complementary View — $299/view
+    [HIDDEN until Essential or Premium is checked]
+    Slider: 1–10 | Subtotal: $X
+    Tooltip: "Additional angles within the same space"
+
+[ ] 3D Floor Plan — $850/plan
+    Slider: 1–10 | Subtotal: $X
+
+--- SECTION B: IMMERSIVE EXPERIENCES ---
+Each service = checkbox + sqft slider (500–10,000)
+Price updates live as slider moves.
+
+[ ] Full VR 360 — Meta Quest
+    Base $3,500 + $2.90/sqft | Slider → Live total: $X
+
+[ ] Browser Virtual Tour
+    Base $2,500 + $1.50/sqft | Slider → Live total: $X
+
+[ ] Cinematic Video Walkthrough
+    Base $2,500 + $2.00/sqft | Slider → Live total: $X
+
+[ ] Interactive VR — Change materials live
+    Base $3,500 + $4.00/sqft | Slider → Live total: $X
+
+--- SECTION C: ARCHITECTURE & DRAFTING ---
+
+[ ] Drafting / Construction Drawings — $380/plan
+    Slider: 1–20 plans | Subtotal: $X
+    [Request Custom Quote] button for complex projects
+
+[ ] Architectural Design — $3.50/sqft
+    Slider: 500–20,000 sqft | Total: $X
+    Auto-note: "Includes X Essential Renderings (1 per 1,000 sqft)"
+
+--- SECTION D: WEBSITE ---
+Radio selector (one at a time):
+
+( ) No website needed
+( ) Starter Landing Page — $7,000
+( ) Business Pro Website — $9,500
+( ) Full Brand Experience — $14,500
+( ) E-commerce / Portal — $18,000
+
+--- QUOTE SUMMARY PANEL ---
+Lists each selected service + subtotal
+ESTIMATED TOTAL: $XX,XXX
+(Bold, large, always visible)
+[Continue to Your Info →]
+
+============================================================
+SCREEN 4 — YOUR INFORMATION (Contact)
+============================================================
+Fields:
+- Full Name *
+- Email Address * [token registered here → Hugo notified]
+- Phone Number *
+- Company / Project Name
+- Brief project description (textarea, 3 lines)
+
+Button: [See My Estimate →]
+
+Small note: "We'll send a copy of your estimate to your email."
+
+============================================================
+SCREEN 5 — YOUR ESTIMATE + CONVERSION HOOK
+============================================================
+
+TOP SECTION — Itemized summary:
+  Visualizations:         $X,XXX
+  Immersive Experiences:  $X,XXX
+  Architecture:           $X,XXX
+  Website:                $X,XXX
+  ─────────────────────────────
+  ESTIMATED TOTAL:        $XX,XXX  ← Big, bold
+
+MIDDLE SECTION — Conversion Hook:
+  ┌─────────────────────────────────────────┐
+  │  🔒 Lock in your price today            │
+  │  Pay your 30% deposit now and receive   │
+  │  10% OFF your total project.            │
+  │                                         │
+  │  ⚡ This offer is only valid the first  │
+  │  time you submit your information.      │
+  └─────────────────────────────────────────┘
+
+BOTTOM SECTION — 3 action buttons (priority order):
+
+  [PRIMARY]   Pay 30% Deposit & Save 10% → Stripe
+  [SECONDARY] Send This Estimate to My Email → EmailJS
+  [TERTIARY]  Book a Consultation → Calendly link
+
+Footer note (small gray text):
+"This is an express estimate. Final pricing is confirmed 
+after reviewing your project details with our team."
+
+============================================================
+TECHNICAL NOTES
+============================================================
+
+Platform: Standalone HTML file
+Deploy: quotes.rendimension.com via cPanel
+Email tool: EmailJS (no backend required)
+Payments: Stripe Checkout (redirect or embedded)
+Discount token: localStorage + EmailJS notification logic
+  - First submission = token saved, Hugo notified
+  - Repeat email = discount CTA disabled
+Analytics: Google Analytics or simple UTM tracking
+Responsive: Mobile-first, works on all devices

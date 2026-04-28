@@ -1,0 +1,145 @@
+{
+  "skill_name": "rendimension-orchestrator",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Review this output for Rendimension:\n\n\"Hola, somos Rendimension y ofrecemos servicios de renderizado 3D para su proyecto. Nuestros renders son de alta calidad y tenemos precios competitivos. Contamos con experiencia en renders de interiores y exteriores. Contactenos para una cotizacion.\"",
+      "expected_output": "REWRITTEN verdict. Complete removal of commodity language. Strategic repositioning with business value framing. No trace of 'servicios de renderizado', 'alta calidad', or 'precios competitivos'.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "Output contains verdict REWRITTEN",
+          "type": "contains_verdict"
+        },
+        {
+          "text": "Output does NOT contain 'servicios de renderizado' or 'render service'",
+          "type": "absence_check"
+        },
+        {
+          "text": "Output does NOT contain 'precios competitivos' or 'competitive prices'",
+          "type": "absence_check"
+        },
+        {
+          "text": "Rewritten version connects to a business outcome (sales, decisions, risk, alignment)",
+          "type": "semantic_check"
+        },
+        {
+          "text": "Rewritten version could NOT be used by a freelancer or offshore studio",
+          "type": "identity_test"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Review this email for Rendimension:\n\n\"Hi David, great meeting you yesterday. As discussed, I'm sending over pricing for your project. We can deliver 5 exterior renders and 3 interiors for $6,200. Let me know if you'd like to proceed.\"",
+      "expected_output": "NEEDS REVISION or REWRITTEN. Identifies missing client objective, missing business context, missing reason behind scope. Rewrite keeps email format but introduces value framing and justifies scope based on objective.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "Output contains verdict NEEDS REVISION or REWRITTEN",
+          "type": "contains_verdict"
+        },
+        {
+          "text": "Identifies that the email lacks client objective or business context",
+          "type": "diagnostic_check"
+        },
+        {
+          "text": "Rewritten version maintains email format (not a speech or essay)",
+          "type": "format_check"
+        },
+        {
+          "text": "Rewritten version connects the scope to a business reason",
+          "type": "semantic_check"
+        },
+        {
+          "text": "Rewritten version does not lead with deliverable count as the main message",
+          "type": "structure_check"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Review this slide content for Rendimension:\n\n\"Rendimension Visualization Package: 8 photorealistic renders, 1 virtual tour, 1 floor plan. Total: $18,500. Timeline: 3 weeks. Includes 2 rounds of revisions.\"",
+      "expected_output": "NEEDS REVISION or REWRITTEN. Flags: no narrative, no positioning, no business impact. Rewrite positions as investor confidence tool, connects visuals to pre-sales/approval, makes $18,500 feel like strategic investment.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "Output contains verdict NEEDS REVISION or REWRITTEN",
+          "type": "contains_verdict"
+        },
+        {
+          "text": "Identifies that the slide lacks narrative and business impact",
+          "type": "diagnostic_check"
+        },
+        {
+          "text": "Rewritten version positions visuals as tools for a business objective",
+          "type": "semantic_check"
+        },
+        {
+          "text": "Rewritten version does NOT read like a menu or checklist",
+          "type": "structure_check"
+        },
+        {
+          "text": "Rewritten version frames the price as an investment, not an expense",
+          "type": "framing_check"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "A client says to Rendimension:\n\n\"Another studio offered me the same renders for $2,000. Why are you so expensive?\"",
+      "expected_output": "REWRITTEN. Does NOT defend on quality/realism/software. Reframes the entire conversation. Explains the difference is in thinking, strategy, and outcome — not image quality. Makes the cheap option feel incomplete, not cheaper. Maintains authority without sounding defensive.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "Does NOT defend primarily based on image quality, realism, or software",
+          "type": "absence_check"
+        },
+        {
+          "text": "Reframes the comparison as fundamentally different services",
+          "type": "semantic_check"
+        },
+        {
+          "text": "Maintains authority and confidence — does not sound defensive",
+          "type": "tone_check"
+        },
+        {
+          "text": "Anchors on strategic value (decisions, sales, risk) not production value",
+          "type": "framing_check"
+        },
+        {
+          "text": "Makes the cheaper option feel incomplete, not just cheaper",
+          "type": "positioning_check"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Review this draft response from a Rendimension team member:\n\n\"Thank you for your inquiry. We can provide 5 high-quality renders, 2 revisions per image, and a delivery time of 7 business days. Total price is based on the number of views.\"",
+      "expected_output": "REWRITTEN. Identifies as low-level thinking. Flags commodity framing and misalignment. Rewrites from outcome-first logic. Educates implicitly without lecturing. The rewritten version could go to a client without Hugo editing it.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "Output identifies the draft as misaligned with Rendimension positioning",
+          "type": "diagnostic_check"
+        },
+        {
+          "text": "Output explains WHY the draft is weak (not just that it is)",
+          "type": "explanation_check"
+        },
+        {
+          "text": "Rewritten version starts with the client's situation or objective, not deliverables",
+          "type": "structure_check"
+        },
+        {
+          "text": "Rewritten version removes 'price based on number of views' framing",
+          "type": "absence_check"
+        },
+        {
+          "text": "Rewritten version sounds like it came from a strategic partner",
+          "type": "identity_test"
+        }
+      ]
+    }
+  ]
+}

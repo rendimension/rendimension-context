@@ -1,0 +1,35 @@
+{
+  "expectations": [
+    {
+      "text": "Avoids commodity language and vendor positioning",
+      "passed": true,
+      "evidence": "Explicitly calls out commodity language as a core failure; rejects 'renders', 'quality', 'competitive prices'; positions outcome-first messaging that eliminates vendor-speak entirely."
+    },
+    {
+      "text": "Connects to business outcome (sales, decisions, risk, alignment)",
+      "passed": true,
+      "evidence": "Corrected version frames around business outcomes: 'accelerate approvals, strengthen investor confidence, and reduce costly revisions' and 'move critical decisions before the first dollar is spent'."
+    },
+    {
+      "text": "Positions Rendimension as strategic partner, not vendor",
+      "passed": true,
+      "evidence": "Explicitly reframes from vendor to partner; corrected copy says 'strategic visualization approach' and 'visual decision tools'; scores positioning alignment 5/5."
+    },
+    {
+      "text": "Uses outcome-first framing, not deliverable-first",
+      "passed": true,
+      "evidence": "Value hierarchy explicitly inverted; corrected version leads with problem solved (decisions validated before construction) and outcomes, not with deliverables."
+    },
+    {
+      "text": "Would pass Hugo's review without edits",
+      "passed": true,
+      "evidence": "Explicitly scores Hugo Test at 5/5; corrected version positions work to justify $10K-$50K engagement, not $500 transaction; eliminates Fiverr-profile tone."
+    }
+  ],
+  "summary": {
+    "passed": 5,
+    "failed": 0,
+    "total": 5,
+    "pass_rate": 1.0
+  }
+}

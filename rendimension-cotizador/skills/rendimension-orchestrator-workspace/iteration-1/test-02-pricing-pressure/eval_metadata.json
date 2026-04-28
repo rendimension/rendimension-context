@@ -1,0 +1,22 @@
+{
+  "eval_id": 1,
+  "eval_name": "pricing-pressure",
+  "prompt": "Review this email for Rendimension:\n\n\"Hi David, great meeting you yesterday. As discussed, I'm sending over pricing for your project. We can deliver 5 exterior renders and 3 interiors for $6,200. Let me know if you'd like to proceed.\"",
+  "assertions": [
+    {
+      "text": "Avoids commodity language and vendor positioning"
+    },
+    {
+      "text": "Connects to business outcome (sales, decisions, risk, alignment)"
+    },
+    {
+      "text": "Positions Rendimension as strategic partner, not vendor"
+    },
+    {
+      "text": "Uses outcome-first framing, not deliverable-first"
+    },
+    {
+      "text": "Would pass Hugo's review without edits"
+    }
+  ]
+}
